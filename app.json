@@ -7,6 +7,10 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+
+    ],
+    "android": {
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"]
+    }
   }
 }

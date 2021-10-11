@@ -1,0 +1,163 @@
+import i18n from 'i18next';
+import {initReactI18next} from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import {NativeModules} from "react-native";
+
+const resources = {
+    en: {
+        translation: {
+            "buttonStart": "Start",
+            "buttonEnd": "Finish",
+            "logOutButton": "Log out",
+            "profile": "profile",
+            "diet": "Diet plans",
+            "startTraining": "Start activity",
+            "trainList": "Training list",
+            "mainMenu": "Menu",
+            "name": "Name",
+            "surname": "Surname",
+            "email": "Email adress",
+            "age": "Age",
+            "gender": "Gender",
+            "height": "Height",
+            "weight": "Weight",
+            "goalCalories": "Daily calories goal",
+            "goalDistance": "Daily distance goal",
+            "goalSteps": "Daily steps goal",
+            "enter": "Enter ",
+            "updateButton": "Update data",
+            "female": "Woman",
+            "male": "Man",
+            "unknown": "I don't want to specify",
+            "emptyFieldWarning": "Field can't be empty!",
+            "HomeScreen": "Home",
+            "MapScreen": "Map",
+            "DietScreen": "Diet",
+            "TrainingScreen": "Training",
+            "ProfileScreen": "Profile",
+            "Credentials": "Credentials",
+            "Goals": "Goals",
+            "Measurements": "Measurements",
+            "Hello": "Hello",
+            "GreetingsMorning": "Perfect time to start a healthy day!",
+            "GreetingsNoon": "How about an active noon?",
+            "GreetingsAfternoon": "Nothing like an afternoon nap... or a workout",
+            "GreetingsEvening": "Healthy living in the evening!",
+            "GreetingsNight": "A short jog in the moonlight?",
+            "goalCaloriesMain": "Calories burned",
+            "goalDistanceMain": "Distance traveled",
+            "goalStepsMain": "Steps taken",
+            "dailyGoalsMain": "Your daily progress",
+        }
+    },
+    fr: {
+        translation: {
+            "startButton": "Commencer",
+            "endButton": "Fin",
+            "logOutButton": "",
+            "profile": "",
+            "diet": "",
+            "startTraining": "",
+            "trainList": "",
+            "mainMenu": "",
+            "name": "",
+            "surname": "",
+            "email": "",
+            "age": "",
+            "gender": "",
+            "height": "",
+            "weight": "",
+            "goalCalories": "",
+            "goalDistance": "",
+            "goalSteps": "",
+            "enter": "",
+            "updateButton": "",
+            "female": "",
+            "male": "",
+            "unknown": "",
+            "emptyFieldWarning": "",
+            "HomeScreen": "",
+            "MapScreen": "",
+            "DietScreen": "",
+            "TrainingScreen": "",
+            "ProfileScreen": "",
+            "Credentials": "",
+            "Goals": "",
+            "Measurements": "",
+            "Hello": "",
+            "GreetingsMorning": "",
+            "GreetingsNoon": "",
+            "GreetingsAfternoon": "",
+            "GreetingsEvening": "",
+            "GreetingsNight": "",
+            "goalCaloriesMain": "",
+            "goalDistanceMain": "",
+            "goalStepsMain": "",
+            "dailyGoalsMain": "",
+        }
+    },
+    pl: {
+        translation: {
+            "startButton": "Rozpocznij",
+            "endButton": "Zakończ",
+            "logOutButton": "Wyloguj",
+            "profile": "profil",
+            "diet": "Diety",
+            "startTraining": "Rozpocznij",
+            "trainList": "Treningi",
+            "mainMenu": "Kokpit",
+            "name": "Imię",
+            "surname": "Nazwisko",
+            "email": "Adres mailowy",
+            "age": "Wiek",
+            "gender": "Płeć",
+            "height": "Wzrost",
+            "weight": "Waga",
+            "goalCalories": "Dzienne zapotrzebowanie kaloryczne",
+            "goalDistance": "Dzienny cel dystans",
+            "goalSteps": "Dzienny cel liczba kroków",
+            "enter": "Wprowadź ",
+            "updateButton": "Aktualizuj dane",
+            "female": "Kobieta",
+            "male": "Mężczyzna",
+            "unknown": "Wolę nie podawać",
+            "emptyFieldWarning": "Pole nie może być puste!",
+            "HomeScreen": "Kokpit główny",
+            "MapScreen": "Mapa",
+            "DietScreen": "Diety",
+            "TrainingScreen": "Treningi",
+            "ProfileScreen": "Profil",
+            "Credentials": "Dane osobowe",
+            "Goals": "Cele",
+            "Measurements": "Pomiary ciała",
+            "Hello": "Witaj",
+            "GreetingsMorning": "Idealna pora na zdrowy początek dnia!",
+            "GreetingsNoon": "Co powiesz na aktywne południe?",
+            "GreetingsAfternoon": "Nie ma to jak popołudniowa drzemka... lub trening",
+            "GreetingsEvening": "Zdrowy tryb życia wieczorową porą!",
+            "GreetingsNight": "Krótka przebieżka przy świetle księżyca?",
+            "goalCaloriesMain": "Ilość spalonych kalorii",
+            "goalDistanceMain": "Przebyty dystans",
+            "goalStepsMain": "Przebyta liczba kroków",
+            "dailyGoalsMain": "Twój codzienny postęp"
+        }
+    }
+
+};
+
+const locale = NativeModules.I18nManager.localeIdentifier;
+i18n.locale = locale
+
+i18n
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+        resources,
+        lng:locale.substring(0, 2),
+        fallbackLng: 'en',
+        interpolation: {
+            escapeValue: false,
+        },
+    });
+
+export default i18n;

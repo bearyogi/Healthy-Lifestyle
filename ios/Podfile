@@ -18,4 +18,8 @@ target 'AwesomeProject' do
   #     flipper_post_install(installer)
   #   end
   # end
+  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
+
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
 end
