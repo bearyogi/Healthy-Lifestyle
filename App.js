@@ -19,8 +19,7 @@ if (!global.atob) {
 const Stack = createStackNavigator();
 
 export default function App() {
-
-    const [ setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(null)
 
     useEffect(() => {
@@ -35,7 +34,7 @@ export default function App() {
                         setLoading(false)
                         setUser(userData)
                     })
-                    .catch(() => {
+                    .catch((S) => {
                         setLoading(false)
                     });
             } else if (!user) {

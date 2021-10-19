@@ -5,9 +5,8 @@ import {Box, Heading, Progress, VStack} from "native-base";
 import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import Footer from '../../utils/Footer';
 
-export default function HomeScreen(props,{  }) {
-
-    const userID = props.extraData.id
+export default function HomeScreen(props) {
+    const userID = props.extraData.id;
     const { t } = useTranslation();
 
     const [greeting, setGreeting] = useState("GreetingsMorning")
