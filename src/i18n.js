@@ -48,6 +48,8 @@ const resources = {
             "goalDistanceMain": "Distance traveled",
             "goalStepsMain": "Steps taken",
             "dailyGoalsMain": "Your daily progress",
+            "trainingList": "List of exercises for a particular body part:",
+            "dietList": "List of ingredients mainly used in the diet:",
         }
     },
     fr: {
@@ -94,6 +96,8 @@ const resources = {
             "goalDistanceMain": "",
             "goalStepsMain": "",
             "dailyGoalsMain": "",
+            "trainingList": "",
+            "dietList": "",
         }
     },
     pl: {
@@ -139,7 +143,9 @@ const resources = {
             "goalCaloriesMain": "Ilość spalonych kalorii",
             "goalDistanceMain": "Przebyty dystans",
             "goalStepsMain": "Przebyta liczba kroków",
-            "dailyGoalsMain": "Twój codzienny postęp"
+            "dailyGoalsMain": "Twój codzienny postęp",
+            "trainingList": "Lista ćwiczeń na daną partię ciała:",
+            "dietList": "Lista składników głównie używanych w diecie:",
         }
     }
 

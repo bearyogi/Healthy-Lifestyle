@@ -3,12 +3,17 @@ import {
     StyleSheet,
     View,
     Text,
-    Button,
+    Button, NativeModules,
 } from "react-native";
 import React, {Component} from 'react';
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import haversine from "haversine";
 import { installWebGeolocationPolyfill} from "expo-location";
+import {Modal} from "native-base";
+import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
+import * as RootNavigation from "../../utils/RootNavigation";
+import {TouchableOpacity} from 'react-native';
+import {firebase} from "../../firebase/config";
 
 installWebGeolocationPolyfill()
 class TrackCurrentUser extends Component{
@@ -22,24 +27,45 @@ class TrackCurrentUser extends Component{
         error: "",
         routeCoordinates: [],
         distanceTravelled: 0, // contain live distance
-        prevLatLng: {}, // contain pass lat and lang value
+        prevLatLng: {}, // contain pass lat and lang values
         timeStarted: new Date().getTime(),
-        timeActual: 0
+        timeActual: 0,
+        displayCategory: 1,
+        trainingCategoryInfo: [],
+        locale: ""
     };
 
     //   getLocation Permission and call getCurrentLocation method
     componentDidMount() {
-        this.getCurrentLocation();
+        this.getData().then(Promise.resolve());
+        this.getCurrentLocation().then(r => Promise.resolve());
+    }
+    componentWillUnmount() {
+        this.setState({displayCategory: 0})
+        this.render();
+        RootNavigation.navigate('Home', this.props.user);
     }
 
     //   getting the current Location of a user...
-    getCurrentLocation =  () => {
-         Location.requestBackgroundPermissionsAsync();
-        navigator.geolocation.watchPosition( position => {
+    getData = async () => {
+        const snapshot = await firebase.firestore().collection('trainingCategory');
+        snapshot.get().then((querySnapshot) => {
+            const tempDoc = []
+            querySnapshot.forEach((doc) => {
+                tempDoc.push({ id: doc.id, ...doc.data() })
+            })
+            this.setState({locale: NativeModules.I18nManager.localeIdentifier.substring(0,2)})
+            this.setState({trainingCategoryInfo: tempDoc})
+        })
+    }
 
-                const { latitude, longitude } = position.coords;
-                const { routeCoordinates } = this.state;
-                const newCoordinate = { latitude, longitude };
+    getCurrentLocation =  async () => {
+        await Location.requestForegroundPermissionsAsync();
+        navigator.geolocation.watchPosition(position => {
+
+                const {latitude, longitude} = position.coords;
+                const {routeCoordinates} = this.state;
+                const newCoordinate = {latitude, longitude};
                 let region = {
                     latitude: parseFloat(position.coords.latitude),
                     longitude: parseFloat(position.coords.longitude),
@@ -72,7 +98,6 @@ class TrackCurrentUser extends Component{
         let initialRegion = Object.assign({}, this.state.initialRegion);
         initialRegion["latitudeDelta"] = 0.005;
         initialRegion["longitudeDelta"] = 0.005;
-        this.mapView.animateToRegion(initialRegion, 2000);
     };
 
     secondsToHms = (d) => {
@@ -95,37 +120,61 @@ class TrackCurrentUser extends Component{
     };
 
     render(){
+        const dispCat = this.state.displayCategory;
         return (
+            <NativeBaseProvider>
+                {dispCat ? (<View style={{ flex: 1 }}>
+                    <Modal isOpen={dispCat} onClose={() => this.componentWillUnmount()}>
+                    <Modal.Content maxWidth="400px">
+                        <Modal.CloseButton style={styles.closeButton}/>
 
-            <View style={{ flex: 1 }}>
-                <MapView
-                    style={{ flex: 0.9 }}
-                    provider={PROVIDER_GOOGLE}
-                    region={this.state.region}
-                    followUserLocation={true}
-                    ref={ref => (this.mapView = ref)}
-                    zoomEnabled={true}
-                    showsUserLocation={true}
-                    onMapReady={this.goToInitialLocation}
-                    initialRegion={this.state.initialRegion}
-                    lineDashPattern={[0]}
-                >
+                        <Modal.Body>
+                            <Text style={styles.hello}>{this.state.locale === 'pl' ? "Wybierz kategorię aktywności" : this.state.locale === 'fr' ? "Sélectionnez une catégorie d'activité" : "Choose activity category"}</Text>
+                            {
+                            this.state.trainingCategoryInfo.map(function(info){
+                            return (
+                            <TouchableOpacity onPress={() => this.setState({displayCategory: 1})} style={styles.categoryButton}>
+                                <Text style={styles.categoryText}> {info.title} </Text>
+                            </TouchableOpacity>
+                            )
+                            })}
 
-                    <Polyline
-                        coordinates={this.state.routeCoordinates}
-                        geodesic={true}
-                        strokeColor='#01bffe'
-                        fillColor="rgba(0,0,255,0.5)"
-                        strokeWidth={4}
-                        lineDashPattern={[5]}
-                    />
+                        </Modal.Body>
+                        <Modal.Footer>
+                        </Modal.Footer>
+                    </Modal.Content>
+                </Modal>
+            </View>) : (<View style={{ flex: 1 }}>
+                    <MapView
+                        style={{ flex: 0.9 }}
+                        provider={PROVIDER_GOOGLE}
+                        region={this.state.region}
+                        followUserLocation={true}
+                        ref={ref => (this.mapView = ref)}
+                        zoomEnabled={true}
+                        showsUserLocation={true}
+                        onMapReady={this.goToInitialLocation}
+                        initialRegion={this.state.initialRegion}
+                        lineDashPattern={[0]}
+                    >
 
-                </MapView>
-                <View style={styles.distanceContainer}>
-                    <Text>{this.secondsToHms(this.state.timeActual - this.state.timeStarted)} time {parseFloat(this.state.distanceTravelled).toFixed(4)} km </Text>
-                    {<Button  title="HEllo" color="#841584"/>}
-                </View>
-            </View>
+                        <Polyline
+                            coordinates={this.state.routeCoordinates}
+                            geodesic={true}
+                            strokeColor='#01bffe'
+                            fillColor="rgba(0,0,255,0.5)"
+                            strokeWidth={4}
+                            lineDashPattern={[5]}
+                        />
+
+                    </MapView>
+                    <View style={styles.distanceContainer}>
+                        <Text>{this.secondsToHms(this.state.timeActual - this.state.timeStarted)} time {parseFloat(this.state.distanceTravelled).toFixed(4)} km </Text>
+                        {<Button  title="START" color="#841584" onClick={this.getCurrentLocation()}/>}
+                    </View>
+                </View>)}
+
+            </NativeBaseProvider>
         )};
 }
 
@@ -137,5 +186,27 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "transparent"
+    },
+    categoryButton: {
+        borderRadius: 15,
+        marginTop: 10,
+        width: '100%',
+        height: 60,
+        backgroundColor: '#8ab7ff'
+    },
+    categoryText: {
+        paddingTop: 18,
+        textAlign: "center",
+        textTransform: "uppercase",
+        fontSize: 15,
+        color: '#fff'
+    },
+
+    hello: {
+        textAlign: "center",
+        fontSize: 17,
+        marginBottom: 10,
+        marginTop: 10
     }
+
 });

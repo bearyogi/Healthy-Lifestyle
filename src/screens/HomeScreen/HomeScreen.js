@@ -59,12 +59,12 @@ export default function HomeScreen(props) {
                     </Heading>
                     <VStack mx={4} space="md">
                         <Heading size="md">{t('dailyGoalsMain')}:</Heading>
-                        <Progress colorScheme="primary" value={0/allValues.dailyGoalCalories} />
-                        <Heading size="sm" textAlign="right">{t('goalCaloriesMain')}: 0/{allValues.dailyGoalCalories}</Heading>
-                        <Progress colorScheme="secondary" value={0/allValues.dailyGoalDistance} />
-                        <Heading size="sm" textAlign="right">{t('goalDistanceMain')}: 0/{allValues.dailyGoalDistance}m</Heading>
-                        <Progress colorScheme="emerald" value={0/allValues.dailyGoalSteps} />
-                        <Heading size="sm" textAlign="right">{t('goalStepsMain')}: 0/{allValues.dailyGoalSteps}</Heading>
+                        <Progress colorScheme="primary" value={(1300/allValues.dailyGoalCalories)*100} />
+                        <Heading size="sm" textAlign="right">{t('goalCaloriesMain')}: 1300/{allValues.dailyGoalCalories}</Heading>
+                        <Progress colorScheme="secondary" value={(6000/allValues.dailyGoalDistance)*100} />
+                        <Heading size="sm" textAlign="right">{t('goalDistanceMain')}: 6000/{allValues.dailyGoalDistance}m</Heading>
+                        <Progress colorScheme="emerald" value={(9000/allValues.dailyGoalSteps)*100} />
+                        <Heading size="sm" textAlign="right">{t('goalStepsMain')}: 9000/{allValues.dailyGoalSteps}</Heading>
                     </VStack>
                 </VStack>
 
