@@ -52,23 +52,5 @@ export default StyleSheet.create({
     entityText: {
         fontSize: 20,
         color: '#333333'
-    },
-    historyButton: {
-        backgroundColor: '#65e8e6',
-        height: 70,
-        alignSelf: "center",
-        width: '95%',
-        borderRadius: 5,
-    },
-    dailyProgress: {
-        backgroundColor: '#f5ffe3',
-        borderRadius: 5,
-        padding: 15,
-    },
-    progressBar: {
-        height: 15,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        borderColor: '#898b8c'
-    },
+    }
 })

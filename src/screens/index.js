@@ -12,4 +12,6 @@ export { default as TrainingScreen } from './TrainingScreen/TrainingScreen'
 
 export { default as DietScreen } from './DietScreen/DietScreen'
 
+export { default as HistoryScreen } from './HistoryScreen/HistoryScreen'
+
 

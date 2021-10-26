@@ -76,11 +76,12 @@ export default function TrainingScreen(props, { navigation }) {
     return (
         <NativeBaseProvider>
             <View backgroundColor={'#fff'} style={{flex: 1}}>
-                <ScrollView backgroundColor={'#fff'}>
+                <ScrollView marginTop={10} backgroundColor={'#fff'}>
                     {
                         trainingInfo.map(function(d){
                             return (<List.Section theme={{colors: {backgroundColor: '#fff'}}}>
                                 <List.Accordion
+                                    key={d.key}
                                     theme={{ colors: {primary: '#fff'}}}
                                     style={propStyle(d.color,d.id)}
                                     title={<Text textAlign={'center'} fontSize={d.name.length > 8 ? "2xl" : "3xl"}> {getLocale() === "pl" ? d.name : getLocale() === "fr" ? d.nameFr : d.nameEng} </Text>}

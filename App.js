@@ -9,6 +9,7 @@ import {navigationRef} from "./src/utils/RootNavigation";
 import DietScreen from "./src/screens/DietScreen/DietScreen";
 import ProfileScreen from "./src/screens/ProfileScreen/ProfileScreen";
 import TrainingScreen from "./src/screens/TrainingScreen/TrainingScreen";
+import HistoryScreen from "./src/screens/HistoryScreen/HistoryScreen";
 
 if (!global.btoa) {
     global.btoa = encode
@@ -48,7 +49,9 @@ export default function App() {
 
     return (
         <NavigationContainer ref={navigationRef}>
-            <Stack.Navigator>
+            <Stack.Navigator  screenOptions={{
+                headerShown: false
+            }}>
                 {user ? (
                     <>
                         <Stack.Screen name="Home">
@@ -65,6 +68,9 @@ export default function App() {
                         </Stack.Screen>
                         <Stack.Screen name="Profile">
                             {props => <ProfileScreen {...props} extraData={user}/>}
+                        </Stack.Screen>
+                        <Stack.Screen name="History">
+                            {props => <HistoryScreen {...props} extraData={user}/>}
                         </Stack.Screen>
                     </>
                 ) : (

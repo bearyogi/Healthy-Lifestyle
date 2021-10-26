@@ -50,6 +50,7 @@ const resources = {
             "dailyGoalsMain": "Your daily progress",
             "trainingList": "List of exercises for a particular body part:",
             "dietList": "List of ingredients mainly used in the diet:",
+            "trainingHistory": "Check history of your previous trainings",
         }
     },
     fr: {
@@ -98,6 +99,7 @@ const resources = {
             "dailyGoalsMain": "",
             "trainingList": "",
             "dietList": "",
+            "trainingHistory": "",
         }
     },
     pl: {
@@ -146,6 +148,7 @@ const resources = {
             "dailyGoalsMain": "Twój codzienny postęp",
             "trainingList": "Lista ćwiczeń na daną partię ciała:",
             "dietList": "Lista składników głównie używanych w diecie:",
+            "trainingHistory": "Sprawdź historię poprzednich treningów",
         }
     }
 

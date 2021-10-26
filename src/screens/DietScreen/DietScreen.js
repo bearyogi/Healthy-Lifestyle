@@ -76,7 +76,7 @@ export default function TrainingScreen(props, { navigation }) {
     return (
         <NativeBaseProvider>
             <View backgroundColor={'#fff'} style={{flex: 1}}>
-                <ScrollView backgroundColor={'#fff'}>
+                <ScrollView marginTop={10} backgroundColor={'#fff'}>
                     {
                         dietInfo.map(function(d){
                             return (<List.Section theme={{colors: {backgroundColor: '#fff'}}}>

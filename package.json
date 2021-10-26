@@ -64,6 +64,7 @@
     "@expo/vector-icons": "^12.0.0",
     "expo-sensors": "~10.2.2",
     "haversine": "^1.1.1",
+    "react-circle-progress-bar": "^0.1.4",
     "react-native-maps-directions": "^1.8.0",
     "react-redux": "^7.2.5"
   },

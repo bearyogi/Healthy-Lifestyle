@@ -8,7 +8,7 @@ import React from "react";
     const [selected, setSelected] = React.useState(props.choice);
     const { t } = useTranslation();
     return(
-        <Box justifyContent="space-between" height="50" marginBottom="1" bg="white" safeAreaTop>
+        <Box justifyContent="space-between" height="50" marginBottom="1" bg="white" >
             <Center flex={1}>
             </Center>
 

@@ -77,8 +77,9 @@ export default function ProfileScreen(props) {
     return (
 
         <NativeBaseProvider>
-            <View style={{flex: 1}}>
-            <ScrollView backgroundColor={'#fff'}>
+
+            <View style={{flex: 1, backgroundColor: '#fff'}}>
+            <ScrollView marginTop={10} backgroundColor={'#fff'}>
                 <List.Section>
                     <List.Accordion
                         theme={{ colors: {background : '#fff' ,primary: '#25c53a'}}}

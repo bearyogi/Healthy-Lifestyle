@@ -51,5 +51,126 @@ export default StyleSheet.create({
     entityText: {
         fontSize: 20,
         color: '#333333'
+    },
+    distanceContainer: {
+        flex: 0.25,
+        backgroundColor: "transparent",
+        borderStyle: "solid",
+        borderTopWidth: 2,
+        borderTopColor: '#3da144'
+    },
+    categoryButton: {
+        borderRadius: 15,
+        marginTop: 10,
+        width: '100%',
+        height: 60,
+        backgroundColor: '#8ab7ff'
+    },
+    categoryText: {
+        paddingTop: 18,
+        textAlign: "center",
+        textTransform: "uppercase",
+        fontSize: 15,
+        color: '#fff'
+    },
+
+    hello: {
+        textAlign: "center",
+        fontSize: 17,
+        marginBottom: 10,
+        marginTop: 35
+    },
+    textTrainingTime: {
+        textAlign: "center",
+        marginTop: 22,
+        fontSize: 50,
+        fontWeight: 'bold',
+    },
+    textTrainingDistance: {
+        marginTop: 25,
+        marginLeft: '15%',
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+
+    textTrainingCalories: {
+        marginTop: 25,
+        marginLeft: '14%',
+        textAlign: "right",
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+
+    textTrainingSmallTime: {
+        color: '#878787',
+        fontSize: 15,
+        textAlign: "center",
+        fontWeight: 'bold',
+    },
+    textTrainingSmallDistance: {
+        color: '#878787',
+        marginTop: '-8%',
+        marginLeft: '16%',
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    textTrainingSmallCalorie: {
+        color: '#878787',
+        marginTop: '-8%',
+        marginLeft: '42%',
+        textAlign: "right",
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    mapContainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    stopIcon: {
+        marginTop: 0,
+        marginLeft: '7%'
+    },
+    startButton: {
+      width: '30%',
+      alignSelf: "center"
+    },
+    summaryText1: {
+        fontSize: 25,
+        textAlign: "center",
+        fontWeight: 'bold',
+        color: '#000',
+        marginTop: 20,
+        marginBottom: 30,
+        marginLeft: 5
+    },
+    summaryText2: {
+        fontSize: 20,
+        marginBottom: 7,
+        fontWeight: 'bold',
+        color: '#000',
+        marginLeft: 5
+    },
+    summaryText3: {
+        fontSize: 30,
+        marginBottom: 7,
+        marginTop: 25,
+        fontWeight: 'bold',
+        color: '#000',
+        textAlign: "center",
+    },
+    summaryText4: {
+        fontSize: 20,
+        color: '#000',
+        textAlign: "center",
+    },
+    summaryModal: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: "#d0f7d8",
+    },
+    endButtonModal:{
+        width: '100%',
+        height: 80,
+        backgroundColor: "#4bd65d"
     }
 })
