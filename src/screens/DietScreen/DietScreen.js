@@ -77,9 +77,10 @@ export default function TrainingScreen(props, { navigation }) {
         <NativeBaseProvider>
             <View backgroundColor={'#fff'} style={{flex: 1}}>
                 <ScrollView marginTop={10} backgroundColor={'#fff'}>
+                    <List.Section theme={{colors: {backgroundColor: '#fff'}}}>
                     {
                         dietInfo.map(function(d){
-                            return (<List.Section theme={{colors: {backgroundColor: '#fff'}}}>
+                            return (
                                     <List.Accordion
                                         theme={{ colors: {primary: '#fff'}}}
                                         style={propStyle(d.color,d.id)}
@@ -94,10 +95,11 @@ export default function TrainingScreen(props, { navigation }) {
 
                                         </Stack>
                                     </List.Accordion>
-                                </List.Section>
+
                             )
                         })
                     }
+                    </List.Section>
                 </ScrollView>
                 <Footer choice={3} user={props.extraData.user}/>
             </View>

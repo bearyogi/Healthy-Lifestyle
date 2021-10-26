@@ -11,6 +11,7 @@ import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import Footer from '../../utils/Footer';
 import { List } from 'react-native-paper';
 import {NativeModules} from "react-native";
+import styles from "../DietScreen/styles";
 export default function TrainingScreen(props, { navigation }) {
 
     const [trainingInfo, setTrainingInfo] = useState([]);
@@ -57,6 +58,15 @@ export default function TrainingScreen(props, { navigation }) {
         return NativeModules.I18nManager.localeIdentifier.substring(0,2);
     }
 
+    const lightenColor = (color, percent) => {
+        let num = parseInt(color.replace("#",""),16),
+            amt = Math.round(2.55 * percent),
+            R = (num >> 16) + amt,
+            B = (num >> 8 & 0x00FF) + amt,
+            G = (num & 0x0000FF) + amt;
+        return (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
+    };
+
     const getExpandInfo = (id) => {
         return expandInfo[expandInfo.findIndex(element => element.id === id)];
     }
@@ -77,9 +87,10 @@ export default function TrainingScreen(props, { navigation }) {
         <NativeBaseProvider>
             <View backgroundColor={'#fff'} style={{flex: 1}}>
                 <ScrollView marginTop={10} backgroundColor={'#fff'}>
+                    <List.Section style={styles.sectionList} theme={{colors: {backgroundColor: '#fff'}}}>
                     {
                         trainingInfo.map(function(d){
-                            return (<List.Section theme={{colors: {backgroundColor: '#fff'}}}>
+                            return (
                                 <List.Accordion
                                     key={d.key}
                                     theme={{ colors: {primary: '#fff'}}}
@@ -87,7 +98,7 @@ export default function TrainingScreen(props, { navigation }) {
                                     title={<Text textAlign={'center'} fontSize={d.name.length > 8 ? "2xl" : "3xl"}> {getLocale() === "pl" ? d.name : getLocale() === "fr" ? d.nameFr : d.nameEng} </Text>}
                                     expanded={getExpandInfo()}
                                     onPress={ () => handlePress1(d.id) }>
-                                    <Stack mx={2} key={d.id}>
+                                    <Stack style={{backgroundColor: 'fff', borderRadius: 5}} mx={2} key={d.id}>
                                         <Text marginBottom={7} fontSize={"md"} textAlign={'justify'}>
                                             {getLocale() === "pl" ? d.description : getLocale() === "fr" ? d.descriptionFr : d.descriptionEng}</Text>
                                         <Text marginBottom={3} fontSize={"lg"} >{t('trainingList')}</Text>
@@ -95,10 +106,11 @@ export default function TrainingScreen(props, { navigation }) {
 
                                     </Stack>
                                 </List.Accordion>
-                            </List.Section>
+
                             )
                         })
                     }
+                    </List.Section>
                 </ScrollView>
                 <Footer choice={2} user={props.extraData.user}/>
             </View>

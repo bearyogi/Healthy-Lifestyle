@@ -51,6 +51,13 @@ const resources = {
             "trainingList": "List of exercises for a particular body part:",
             "dietList": "List of ingredients mainly used in the diet:",
             "trainingHistory": "Check history of your previous trainings",
+            "activity": "Activity:",
+            "timeElapsed": "Time:",
+            "calories": "Calories burned:",
+            "distance": "Distance:",
+            "date": "Date:",
+            "historyHeading" : "Training history",
+            "lastTraining" : "Last activity",
         }
     },
     fr: {
@@ -100,6 +107,13 @@ const resources = {
             "trainingList": "",
             "dietList": "",
             "trainingHistory": "",
+            "activity": "",
+            "timeElapsed": "",
+            "calories": "",
+            "distance": "",
+            "date": "",
+            "historyHeading" : "",
+            "lastTraining" : "",
         }
     },
     pl: {
@@ -149,6 +163,13 @@ const resources = {
             "trainingList": "Lista ćwiczeń na daną partię ciała:",
             "dietList": "Lista składników głównie używanych w diecie:",
             "trainingHistory": "Sprawdź historię poprzednich treningów",
+            "activity": "Aktywność:",
+            "timeElapsed": "Czas trwania:",
+            "calories": "Spalone kalorie:",
+            "distance": "Dystans:",
+            "date": "Data:",
+            "historyHeading" : "Historia treningów",
+            "lastTraining" : "Najnowsza aktywność",
         }
     }
 

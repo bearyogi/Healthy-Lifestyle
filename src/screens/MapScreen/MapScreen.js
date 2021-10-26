@@ -169,7 +169,9 @@ class TrackCurrentUser extends Component{
             distance: this.state.distanceTravelled.toFixed(2),
             calories: this.state.caloriesBurned.toFixed(0),
             time: this.secondsToHms(this.state.timeActual - this.state.timeStarted),
-             userId: this.props.extraData.id
+             userId: this.props.extraData.id,
+            initialRegion: this.state.initialRegion,
+            region: this.state.region,
         }
         firebase.firestore().collection('gpsTrainingInfo').add(data);
         return null;
@@ -283,7 +285,7 @@ class TrackCurrentUser extends Component{
                     <Modal.Body>
                         {
                             <View>
-                                <View style={styles.mapContainer}>
+                                <View id={"mapView"} style={styles.mapContainer}>
                                 <MapView
                                     style={{ flex: 0.35, width: '100%', height: 250, borderWidth: 2, borderColor: '#000', borderStyle: 'solid'}}
                                     provider={PROVIDER_GOOGLE}

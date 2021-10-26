@@ -52,5 +52,60 @@ export default StyleSheet.create({
     entityText: {
         fontSize: 20,
         color: '#333333'
+    },
+    summaryText1: {
+        fontSize: 25,
+        textAlign: "center",
+        fontWeight: 'bold',
+        color: '#000',
+        marginTop: 20,
+        marginBottom: 30,
+        marginLeft: 5
+    },
+    summaryText2: {
+        fontSize: 12,
+        marginBottom: 2,
+        fontWeight: 'bold',
+        color: '#000',
+        marginLeft: 5
+    },
+    summaryText3: {
+        fontSize: 30,
+        marginBottom: 7,
+        marginTop: 25,
+        fontWeight: 'bold',
+        color: '#000',
+        textAlign: "center",
+    },
+    summaryText4: {
+        fontSize: 20,
+        color: '#000',
+        textAlign: "center",
+    },
+    summaryModal: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: "#d0f7d8",
+    },
+    endButtonModal:{
+        width: '100%',
+        height: 80,
+        backgroundColor: "#4bd65d"
+    },
+    trainingInfo: {
+        marginTop: 10,
+        width:'45%'
+    },
+    historyHeading: {
+        backgroundColor: '#fff',
+        textAlign: 'center',
+        borderBottomWidth: 4,
+        borderBottomColor: '#3ebd51',
+        padding: 5,
+        marginBottom: 10,
+        paddingTop: 15
+    },
+    accordion: {
+        margin: 0
     }
 })

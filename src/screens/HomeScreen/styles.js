@@ -54,10 +54,10 @@ export default StyleSheet.create({
         color: '#333333'
     },
     historyButton: {
-        backgroundColor: '#65e8e6',
+        backgroundColor: '#bdfbff',
         height: 70,
         alignSelf: "center",
-        width: '95%',
+        width: '91%',
         borderRadius: 5,
     },
     dailyProgress: {
@@ -71,4 +71,9 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderColor: '#898b8c'
     },
+    press: {
+        width: '92%',
+        alignSelf: 'center',
+        marginBottom: 15,
+    }
 })
