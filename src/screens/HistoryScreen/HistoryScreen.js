@@ -85,7 +85,7 @@ export default function HistoryScreen(props, { }) {
                                 <List.Accordion
                                     style={styles.accordion}
                                     theme={{ colors: {background : '#fff' ,primary: '#25c53a'}}}
-                                    title={d.year  + "/" + d.month}
+                                    title={<Text style={{fontSize: 22}}>{d.year  + "/" + d.month}</Text>}
                                     expanded={getExpandInfo()}
                                     onPress={ () => handlePress(d.year + "" + d.month) }>
                                     {

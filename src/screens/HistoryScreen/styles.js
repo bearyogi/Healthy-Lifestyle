@@ -106,6 +106,10 @@ export default StyleSheet.create({
         paddingTop: 15
     },
     accordion: {
-        margin: 0
+        margin: 0,
+        height: 70,
+        padding: 15,
+        borderWidth: 1,
+        borderColor: '#f0fcf1'
     }
 })

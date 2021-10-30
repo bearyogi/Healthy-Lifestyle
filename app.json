@@ -1,16 +1,18 @@
 {
-  "name": "AwesomeProject",
-  "displayName": "AwesomeProject",
   "expo": {
     "name": "AwesomeProject",
     "slug": "AwesomeProject",
+    "icon": "./src/utils/triangle.png",
+    "version": "1.0.0",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
 
     ],
     "android": {
-      "permissions": ["ACCESS_BACKGROUND_LOCATION"]
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"],
+      "package": "com.awesomecompany.awesomesportapp",
+      "versionCode": 1
     }
   }
 }

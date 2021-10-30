@@ -16,8 +16,6 @@ export default function HomeScreen(props) {
     const { t } = useTranslation();
 
     const [greeting, setGreeting] = useState("GreetingsMorning")
-    const [lastTraining, setLastTraining] = useState([]);
-    const [lt, setLt] = useState(false);
     const [allValues, setAllValues] = useState({
         name: "",
         surname: "",
@@ -34,7 +32,8 @@ export default function HomeScreen(props) {
     const [dailyActivityInfo, setDailyActivityInfo] = useState({
         calories: 0,
         distance: 0,
-        steps: 0
+        steps: 0,
+        lastTraining: []
     })
 
     const pickGreeting = () => {
@@ -55,7 +54,7 @@ export default function HomeScreen(props) {
     useEffect(() => {
         getData();
         pickGreeting();
-    }, [])
+    },[] )
 
     const getData = async () => {
         const date = new Date();
@@ -109,27 +108,25 @@ export default function HomeScreen(props) {
                     }
                 }
             })
-
+            let tr = {};
             querySnapshot.forEach((doc) => {
                 let dd = doc.data();
                 let ddDate = dd.date.split("-")
                 let ddTime = dd.timeStarted.split(":")
                 if(ddDate[0] === lastDate[0] && ddDate[1] === lastDate[1] && ddDate[2] === lastDate[2]
                     && ddTime[0] === lastTime[0] && ddTime[1] === lastTime[1] && ddTime[2] === lastTime[2]){
-                    setLastTraining(lastTraining, ...dd)
-                    setLt(true);
+                    tr = dd;
                 }
             })
-
             const tempDoc = {
                 calories: calories,
                 distance: distance,
-                steps: steps
+                steps: steps,
+                lastTraining: tr
             }
-           setDailyActivityInfo(tempDoc);
+            console.log(tempDoc);
+            setDailyActivityInfo(tempDoc);
         })
-
-
     }
 
     return (
@@ -159,53 +156,23 @@ export default function HomeScreen(props) {
                     >
                         <Box p="5" rounded="8" bg="#8ccdff">
                             <HStack alignItems="flex-start">
-                                <Text fontSize={18} color="#000" fontWeight="medium">
+                                <Text fontSize={23} color="#000" fontWeight="medium">
                                     {t('trainingHistory')} &#10140;
                                 </Text>
                             </HStack>
                             {
-                                lastTraining.map(function(d){
-                                    return (
-                                        <View>
-                                            <Text style={{ marginTop: 30}} fontSize={22} color="#000" fontWeight="medium">{t('lastTraining')}</Text>
-                                            <View style={{  width: '98%', alignSelf: 'center', marginTop: 3, marginBottom: 3}}>
-
-                                                <View style={{height: 250, width: '100%'}}>
-                                                    <MapView
-                                                        style={{ flex: 1, width: '100%', alignContent: 'center', height: '100%'}}
-                                                        provider={PROVIDER_GOOGLE}
-                                                        region={d.region}
-                                                        zoomEnabled={true}
-                                                        pitchEnabled={false}
-                                                        scrollEnabled={false}
-                                                        rotateEnabled={false}
-                                                        zoomControlEnabled={false}
-                                                        zoomTapEnabled={false}
-
-                                                        initialRegion={d.initialRegion}
-                                                        lineDashPattern={[0]}
-
-                                                    >
-
-                                                        <Polyline
-                                                            coordinates={d.coords}
-                                                            geodesic={true}
-                                                            strokeColor='#01bffe'
-                                                            fillColor="rgba(0,0,255,0.5)"
-                                                            strokeWidth={4}
-                                                            lineDashPattern={[5]}
-                                                        />
-
-                                                    </MapView>
-                                                </View>
+                                        <View style={{borderWidth: 1, borderColor: '#338cb5', marginTop: 10 , borderRadius: 10, padding: 5}}>
+                                            <View style={{ flexDirection: 'row',}}>
+                                                <Text fontSize={20} color="#000" fontWeight="medium">{t('lastTraining')}:</Text>
+                                                <Text fontSize={20} color="#000" fontWeight="medium"> {dailyActivityInfo.lastTraining.date}</Text>
                                             </View>
-                                            <View style={{ flexDirection: 'row', marginTop: 10}}>
-                                                <Text  fontSize={18} color="#000" fontWeight="medium">    {t('distance')} {d.distance} km  </Text>
-                                                <Text fontSize={18} color="#000" fontWeight="medium">{t('calories')} {d.calories}</Text>
+
+                                            <View style={{ marginTop: 10}}>
+                                                <Text  fontSize={15} color="#000" fontWeight="medium">{t('distance')} {dailyActivityInfo.lastTraining.distance} km  </Text>
+                                                <Text fontSize={15} color="#000" fontWeight="medium">{t('calories')} {dailyActivityInfo.lastTraining.calories}</Text>
+                                                <Text fontSize={15} color="#000" fontWeight="medium">{t('timeElapsed')} {dailyActivityInfo.lastTraining.time}</Text>
                                             </View>
                                         </View>
-                                    )
-                                })
                             }
 
                         </Box>
@@ -217,8 +184,9 @@ export default function HomeScreen(props) {
                 </VStack>
 
             </Box>
+            </ScrollView>
             <Footer choice={0} user={props.extraData.user}/>
-                </ScrollView>
+
         </NativeBaseProvider>
     )
 }
