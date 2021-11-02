@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { firebase } from '../../firebase/config'
 import {useTranslation} from "react-i18next";
-import {Box, Flex, Heading, HStack, Progress, ScrollView, Spacer, Stack, Text, View, VStack} from "native-base";
+import {Box, Heading, HStack, Progress, ScrollView,Text, View, VStack} from "native-base";
 import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import Footer from '../../utils/Footer';
 import {Button} from "native-base";
 import * as RootNavigation from "../../utils/RootNavigation";
 import styles from "../HomeScreen/styles"
-import MapView, {Polyline, PROVIDER_GOOGLE} from "react-native-maps";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import {List} from "react-native-paper";
 
 export default function HomeScreen(props) {
-    const userID = props.extraData.id;
+    const user = props.route.params.user ? props.route.params.user : props.extraData
+    const userID = props.route.params.user.id ? props.route.params.user.id : props.extraData.id;
     const { t } = useTranslation();
 
     const [greeting, setGreeting] = useState("GreetingsMorning")
@@ -124,7 +123,6 @@ export default function HomeScreen(props) {
                 steps: steps,
                 lastTraining: tr
             }
-            console.log(tempDoc);
             setDailyActivityInfo(tempDoc);
         })
     }
@@ -151,7 +149,7 @@ export default function HomeScreen(props) {
 
                     </VStack>
                     <Pressable
-                        onPress={() => RootNavigation.navigate('History', {userID})}
+                        onPress={() => RootNavigation.navigate('History', {user})}
                         style={styles.press}
                     >
                         <Box p="5" rounded="8" bg="#8ccdff">
@@ -182,10 +180,9 @@ export default function HomeScreen(props) {
 
 
                 </VStack>
-
             </Box>
             </ScrollView>
-            <Footer choice={0} user={props.extraData.user}/>
+            <Footer choice={0} user={user}/>
 
         </NativeBaseProvider>
     )

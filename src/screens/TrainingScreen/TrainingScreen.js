@@ -18,7 +18,7 @@ export default function TrainingScreen(props, { navigation }) {
     const [expandInfo, setExpandInfo] = useState([]);
     const [value, setValue] = useState(0);
     const entityRef = firebase.firestore().collection('entities')
-    const userID = props.extraData.id
+    const userID = props.route.params.user.id;
     const { t } = useTranslation();
 
 
@@ -112,7 +112,7 @@ export default function TrainingScreen(props, { navigation }) {
                     }
                     </List.Section>
                 </ScrollView>
-                <Footer choice={2} user={props.extraData.user}/>
+                <Footer choice={2} user={props.route.params.user}/>
             </View>
         </NativeBaseProvider>
     )

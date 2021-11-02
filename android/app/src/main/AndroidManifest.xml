@@ -26,5 +26,8 @@
       <package android:name="com.google.android.apps.fitness"/>
     </queries>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBErczs_DSZuxQXvwoow6MFkYCywW-0biE"/>
   </application>
 </manifest>

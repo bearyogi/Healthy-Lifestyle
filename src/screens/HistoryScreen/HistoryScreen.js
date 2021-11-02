@@ -15,7 +15,7 @@ import Footer from "../../utils/Footer";
 
 export default function HistoryScreen(props, { }) {
 
-    const userID = props.extraData.id
+    const userID = props.route.params.user.id;
     const { t } = useTranslation();
     const [trainingInfo, setTrainingInfo] = useState([]);
     const [expandInfo, setExpandInfo] = useState([]);
@@ -140,7 +140,7 @@ export default function HistoryScreen(props, { }) {
                 }
                 </List.Section>
             </ScrollView>
-            <Footer choice={6} user={props.extraData.user}/>
+            <Footer choice={6} user={props.route.params.user}/>
         </View>
         </NativeBaseProvider>
     )

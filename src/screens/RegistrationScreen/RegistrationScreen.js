@@ -3,6 +3,7 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase/config'
 import styles from './styles';
+import {useTranslation} from "react-i18next";
 
 export default function RegistrationScreen({navigation}) {
     const [name, setName] = useState('')
@@ -10,7 +11,7 @@ export default function RegistrationScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-
+    const { t } = useTranslation();
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
@@ -25,11 +26,13 @@ export default function RegistrationScreen({navigation}) {
             .createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 const uid = response.user.uid;
+                let permissionLevel = 0;
                 const data = {
                     id: uid,
                     email,
                     name,
                     surname,
+                    permissionLevel,
                 };
                 const userData = {
                     userId: uid,
@@ -66,12 +69,12 @@ export default function RegistrationScreen({navigation}) {
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
+                style={{ flex: 1, width: '100%' , marginTop: '25%'}}
                 keyboardShouldPersistTaps="always">
-
+                <Text style={styles.helloText}>Healthy Lifestyle</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='Name'
+                    placeholder={t('registerNameInput')}
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setName(text)}
                     value={name}
@@ -81,7 +84,7 @@ export default function RegistrationScreen({navigation}) {
 
                 <TextInput
                     style={styles.input}
-                    placeholder='Surname'
+                    placeholder={t('registerSurnameInput')}
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setSurname(text)}
                     value={surname}
@@ -91,7 +94,7 @@ export default function RegistrationScreen({navigation}) {
 
                 <TextInput
                     style={styles.input}
-                    placeholder='E-mail'
+                    placeholder={t('emailInputLogin')}
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
                     value={email}
@@ -102,7 +105,7 @@ export default function RegistrationScreen({navigation}) {
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
                     secureTextEntry
-                    placeholder='Password'
+                    placeholder={t('passwordInputLogin')}
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     underlineColorAndroid="transparent"
@@ -112,7 +115,7 @@ export default function RegistrationScreen({navigation}) {
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
                     secureTextEntry
-                    placeholder='Confirm Password'
+                    placeholder={t('registerConfirmPasswordInput')}
                     onChangeText={(text) => setConfirmPassword(text)}
                     value={confirmPassword}
                     underlineColorAndroid="transparent"
@@ -121,10 +124,10 @@ export default function RegistrationScreen({navigation}) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onRegisterPress()}>
-                    <Text style={styles.buttonTitle}>Create account</Text>
+                    <Text style={styles.buttonTitle}>{t('createAccount')}</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
+                    <Text style={styles.footerText}>{t('yesAccountText')} <Text onPress={onFooterLinkPress} style={styles.footerLink}>{t('logInText')}</Text></Text>
                 </View>
             </KeyboardAwareScrollView>
         </View>

@@ -34,7 +34,7 @@ export default function ProfileScreen(props) {
     const handlePress1 = () => setExpanded1(!expanded1);
     const handlePress2 = () => setExpanded2(!expanded2);
     const handlePress3 = () => setExpanded3(!expanded3);
-    const userID = props.extraData.id
+    const userID = props.route.params.user.id;
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -66,7 +66,7 @@ export default function ProfileScreen(props) {
     const onUpdateButton = () => {
         if (validation()){
             setDate();
-            RootNavigation.navigate('Home', props.user)
+            RootNavigation.navigate('Home', props.route.params.user)
         }
 
     }
@@ -354,7 +354,7 @@ export default function ProfileScreen(props) {
 
                 </Center>
             </ScrollView>
-            <Footer choice={4} user={props.extraData.user}/>
+            <Footer choice={4} user={props.route.params.user}/>
         </View>
         </NativeBaseProvider>
     )

@@ -17,7 +17,7 @@ export default function TrainingScreen(props, { navigation }) {
     const [expandInfo, setExpandInfo] = useState([]);
     const [value, setValue] = useState(0);
     const entityRef = firebase.firestore().collection('entities')
-    const userID = props.extraData.id
+    const userID = props.route.params.user.id;
     const { t } = useTranslation();
 
 
@@ -82,15 +82,16 @@ export default function TrainingScreen(props, { navigation }) {
                         dietInfo.map(function(d){
                             return (
                                     <List.Accordion
+                                        key={d.id}
                                         theme={{ colors: {primary: '#fff'}}}
                                         style={propStyle(d.color,d.id)}
                                         title={<Text textAlign={'center'} fontSize={d.name.length > 8 ? "2xl" : "3xl"}> {getLocale() === "pl" ? d.name : getLocale() === "fr" ? d.nameFr : d.nameEng} </Text>}
                                         expanded={getExpandInfo()}
                                         onPress={ () => handlePress1(d.id) }>
                                         <Stack mx={2} key={d.id}>
-                                            <Text marginBottom={7} fontSize={"md"} textAlign={'justify'}>
+                                            <Text key={d.id} marginBottom={7} fontSize={"md"} textAlign={'justify'}>
                                                 {getLocale() === "pl" ? d.description : getLocale() === "fr" ? d.descriptionFr : d.descriptionEng}</Text>
-                                            <Text marginBottom={3} fontSize={"lg"} >{t('dietList')}</Text>
+                                            <Text key={d.id} marginBottom={3} fontSize={"lg"} >{t('dietList')}</Text>
                                             {d.ingredients.map(d => (<Text fontSize={"md"}>● {d}</Text>))}
 
                                         </Stack>
@@ -101,7 +102,7 @@ export default function TrainingScreen(props, { navigation }) {
                     }
                     </List.Section>
                 </ScrollView>
-                <Footer choice={3} user={props.extraData.user}/>
+                <Footer choice={3} user={props.route.params.user}/>
             </View>
         </NativeBaseProvider>
     )

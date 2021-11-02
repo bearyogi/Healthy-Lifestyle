@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import haversine from "haversine";
 import { installWebGeolocationPolyfill} from "expo-location";
-import {Button, Icon, IconButton, Modal} from "native-base";
+import {Box, Button, Icon, IconButton, Modal, ScrollView} from "native-base";
 import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import * as RootNavigation from "../../utils/RootNavigation";
 import {TouchableOpacity} from 'react-native';
@@ -16,7 +16,7 @@ import {firebase} from "../../firebase/config";
 import { Ionicons } from '@expo/vector-icons';
 import styles from "../MapScreen/styles"
 import { Hidden } from 'native-base';
-import moment from "moment";
+import Footer from "../../utils/Footer";
 
 installWebGeolocationPolyfill()
 class TrackCurrentUser extends Component{
@@ -57,7 +57,7 @@ class TrackCurrentUser extends Component{
     componentWillUnmount() {
         this.setState({displayCategory: 0})
         this.render();
-        RootNavigation.navigate('Home', this.props.user);
+        RootNavigation.navigate('Home', this.props.route.params.user);
     }
 
     //   getting the current Location of a user...
@@ -169,7 +169,7 @@ class TrackCurrentUser extends Component{
             distance: this.state.distanceTravelled.toFixed(2),
             calories: this.state.caloriesBurned.toFixed(0),
             time: this.secondsToHms(this.state.timeActual - this.state.timeStarted),
-             userId: this.props.extraData.id,
+             userId: this.props.route.params.user.id,
             initialRegion: this.state.initialRegion,
             region: this.state.region,
         }
@@ -177,11 +177,47 @@ class TrackCurrentUser extends Component{
         return null;
     }
 
+    addCategory = () => {
+        RootNavigation.navigate("CreateCategory");
+        let id = 0;
+        const snapshot = firebase.firestore().collection('trainingCategory');
+        snapshot.get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+
+            })})
+        console.log(id)
+        const data = {
+            caloriePerKm: 200,
+            id: id,
+            title: "test",
+            titleEng: "tt",
+            titleFr: "temp"
+        }
+        firebase.firestore().collection('trainingCategory').add(data);
+    }
+
+    editCategory = (id) => {
+        console.log("WITAM")
+    }
+
+      deleteCategory (id) {
+          const snapshot = firebase.firestore().collection('trainingCategory');
+          snapshot.get().then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                  if(doc.data().id === id){
+                      firebase.firestore().collection('trainingCategory').doc(doc.id).delete();
+                      this.getData();
+                  }
+              })})
+
+    }
+
     render(){
         const dispCat = this.state.displayCategory;
         return (
             <NativeBaseProvider>
-                {dispCat ? (<View style={{ flex: 1 }}>
+                {this.props.route.params.user === 0 ?
+                (<View style={{ flex: 1 }}> {dispCat ? (<View style={{ flex: 1 }}>
                     <Modal isOpen={dispCat} onClose={() => this.componentWillUnmount()}>
                     <Modal.Content maxWidth="400px">
                         <Modal.CloseButton style={styles.closeButton}/>
@@ -322,7 +358,32 @@ class TrackCurrentUser extends Component{
                     </Modal.Footer>
                     </Modal.Content>
                     </Modal>
-                </View>)}
+                </View>)}</View>) : (<View style={{flex: 1, height: '100%'}}>
+                        <ScrollView style={{flex: 1, height: '100%', backgroundColor: '#f5f9ff'}}>
+                            <Text style={styles.employeeTextAdd}> {this.state.locale === 'pl' ? "Dodaj kategorię treningową " : this.state.locale === 'fr' ? "FRTEXT" : "Add new training category"} </Text>
+                            <Button onPress={() => this.addCategory() }  style ={styles.addButton}> <Text style={styles.addButtonText}> {this.state.locale === 'pl' ? "Dodaj" : this.state.locale === 'fr' ? "t" : "Add"} </Text> </Button>
+                            <Text style={styles.employeeText}> {this.state.locale === 'pl' ? "Aktywne kategorie treningowe: " : this.state.locale === 'fr' ? "FRTEXT" : "Active training categories:"} </Text>
+                            {
+
+                                this.state.trainingCategoryInfo.map((info) => {
+                                    return (
+                                        <View style={{flex: 1, marginBottom: 15}}>
+                                        <Box key={info.key}  style={styles.categoryEmployee}>
+                                            <Text style={styles.employeeCategoryText}> {this.state.locale === 'pl' ? info.title : this.state.locale === 'fr' ? info.titleFr : info.titleEng} </Text>
+                                            <Text style={styles.employeeCategoryText}> {this.state.locale === 'pl' ? "Kalorie (Km)" : this.state.locale === 'fr' ? "Calorie (Km)" : "Calories (Km)"} :{info.caloriePerKm} </Text>
+
+                                        </Box>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Button onPress={() => this.editCategory(info.id) } style={styles.editButton} >{this.state.locale === 'pl' ? "Edytuj" : this.state.locale === 'fr' ? "t" : "Edit"}</Button>
+                                        <Button onPress={() => this.deleteCategory(info.id)} style ={styles.deleteButton}>{this.state.locale === 'pl' ? "Usuń" : this.state.locale === 'fr' ? "t" : "Delete"}</Button>
+                                    </View>
+                                        </View>
+                                    );
+                                })}
+                        </ScrollView>
+                    <Footer choice={0} user={this.props.route.params.user}/>
+                        </View>
+                )}
             </NativeBaseProvider>
         )};
 }

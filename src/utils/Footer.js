@@ -20,7 +20,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(0);
-                        RootNavigation.navigate('Home', props.user)
+                        RootNavigation.navigate('Home', {user: props.user})
                     }}
                 >
                     <Center>
@@ -41,7 +41,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(1)
-                        RootNavigation.navigate('Map', props.user)
+                        RootNavigation.navigate('Map', {user: props.user})
                     }}
                 >
                     <Center>
@@ -62,7 +62,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(2)
-                        RootNavigation.navigate('Training', props.user)
+                        RootNavigation.navigate('Training', {user: props.user})
                     }}
                 >
                     <Center>
@@ -83,7 +83,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(3)
-                        RootNavigation.navigate('Diet', props.user)
+                        RootNavigation.navigate('Diet', {user: props.user})
                     }}
                 >
                     <Center>
@@ -103,7 +103,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(4)
-                        RootNavigation.navigate('Profile', props.user)
+                        RootNavigation.navigate('Profile', {user: props.user})
                     }}
                 >
                     <Center>
