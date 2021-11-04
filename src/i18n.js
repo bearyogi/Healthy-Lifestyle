@@ -71,6 +71,16 @@ const resources = {
             "createAccount" : "Create account",
             "delete" : "Delete",
             "edit" : "Edit",
+            "categoryEnterText" : "Enter activity name (PL)",
+            "categoryEnterTextEng" : "Enter activity name (ENG)",
+            "categoryEnterTextFr" : "Enter activity name (FR)",
+            "categoryEnterCalorie" : "Enter calories burned per Km",
+            "returnToMap" : "Return to previous menu",
+            "createCategory" : "Create new category",
+            "categoryText" : "Activity name (PL)",
+            "categoryTextEng" : "Activity name (ENG)",
+            "categoryTextFr" : "Activity name (FR)",
+            "categoryCalorie" : "Calories burned per Km",
         }
     },
     fr: {
@@ -140,6 +150,16 @@ const resources = {
             "createAccount" : "",
             "delete" : "",
             "edit" : "",
+            "categoryEnterText" : "",
+            "categoryEnterTextEng" : "",
+            "categoryEnterTextFr" : "",
+            "categoryEnterCalorie" : "",
+            "returnToMap" : "",
+            "createCategory" : "",
+            "categoryText" : "",
+            "categoryTextEng" : "",
+            "categoryTextFr" : "",
+            "categoryCalorie" : "",
         }
     },
     pl: {
@@ -209,6 +229,16 @@ const resources = {
             "createAccount" : "Utwórz konto",
             "delete" : "Usuń",
             "edit" : "Edytuj",
+            "categoryEnterText" : "Wprowadź nazwę aktywności (PL)",
+            "categoryEnterTextEng" : "Wprowadź nazwę aktywności (ENG)",
+            "categoryEnterTextFr" : "Wprowadź nazwę aktywności (FR)",
+            "categoryEnterCalorie" : "Wprowadź ilość kalorii spalaną na Km",
+            "returnToMap" : "Powróć do poprzedniego menu",
+            "createCategory" : "Utwórz nową kategorię",
+            "categoryText" : "Tytuł aktywności (PL)",
+            "categoryTextEng" : "Tytuł aktywności (ENG)",
+            "categoryTextFr" : "Tytuł aktywności (FR)",
+            "categoryCalorie" : "Ilość kalorii spalana na Km",
         }
     }
 

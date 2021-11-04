@@ -14,4 +14,4 @@ export { default as DietScreen } from './DietScreen/DietScreen'
 
 export { default as HistoryScreen } from './HistoryScreen/HistoryScreen'
 
-
+export { default as CreateCategoryScreen } from './CreateCategoryScreen/CreateCategoryScreen'

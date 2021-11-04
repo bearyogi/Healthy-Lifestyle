@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import {LoginScreen, HomeScreen, RegistrationScreen, MapScreen} from './src/screens'
+import {LoginScreen, HomeScreen, RegistrationScreen, MapScreen, CreateCategoryScreen} from './src/screens'
 import {firebase} from './src/firebase/config'
 import {decode, encode} from 'base-64'
 import {navigationRef} from "./src/utils/RootNavigation";
@@ -61,6 +61,7 @@ export default function App() {
                         <Stack.Screen name="Training" component={TrainingScreen}/>
                         <Stack.Screen name="Profile" component={ProfileScreen}/>
                         <Stack.Screen name="History" component={HistoryScreen}/>
+                        <Stack.Screen name="CreateCategory" component={CreateCategoryScreen}/>
                     </>
             </Stack.Navigator>
         </NavigationContainer>

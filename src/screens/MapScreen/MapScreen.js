@@ -179,21 +179,6 @@ class TrackCurrentUser extends Component{
 
     addCategory = () => {
         RootNavigation.navigate("CreateCategory");
-        let id = 0;
-        const snapshot = firebase.firestore().collection('trainingCategory');
-        snapshot.get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-
-            })})
-        console.log(id)
-        const data = {
-            caloriePerKm: 200,
-            id: id,
-            title: "test",
-            titleEng: "tt",
-            titleFr: "temp"
-        }
-        firebase.firestore().collection('trainingCategory').add(data);
     }
 
     editCategory = (id) => {
@@ -367,8 +352,8 @@ class TrackCurrentUser extends Component{
 
                                 this.state.trainingCategoryInfo.map((info) => {
                                     return (
-                                        <View style={{flex: 1, marginBottom: 15}}>
-                                        <Box key={info.key}  style={styles.categoryEmployee}>
+                                        <View key={info.id} style={{flex: 1, marginBottom: 15}}>
+                                        <Box key={info.id}  style={styles.categoryEmployee}>
                                             <Text style={styles.employeeCategoryText}> {this.state.locale === 'pl' ? info.title : this.state.locale === 'fr' ? info.titleFr : info.titleEng} </Text>
                                             <Text style={styles.employeeCategoryText}> {this.state.locale === 'pl' ? "Kalorie (Km)" : this.state.locale === 'fr' ? "Calorie (Km)" : "Calories (Km)"} :{info.caloriePerKm} </Text>
 
