@@ -13,19 +13,15 @@ import Footer from '../../utils/Footer';
 import { List } from 'react-native-paper';
 import {NativeModules} from "react-native";
 import styles from "../DietScreen/styles";
-import * as RootNavigation from "../../utils/RootNavigation";
-export default function TrainingScreen(props, { navigation }) {
+export default function TrainingScreen(props) {
 
     const [trainingInfo, setTrainingInfo] = useState([]);
     const [expandInfo, setExpandInfo] = useState([]);
-    const [value, setValue] = useState(0);
-    const entityRef = firebase.firestore().collection('entities')
-    const userID = props.route.params.user.id;
     const { t } = useTranslation();
 
 
     useEffect(() => {
-        getData();
+        getData().then(Promise.resolve);
     }, [])
 
     const getData = async () => {
@@ -40,10 +36,6 @@ export default function TrainingScreen(props, { navigation }) {
             setExpandInfo(tempInfo);
             setTrainingInfo(tempDoc);
         })
-    }
-
-    const onLogoutPress = () => {
-        firebase.auth().signOut();
     }
 
     const handlePress1 = (id) => {
@@ -64,11 +56,13 @@ export default function TrainingScreen(props, { navigation }) {
         return expandInfo[expandInfo.findIndex(element => element.id === id)];
     }
     const addTrainingPlan = () => {
-        RootNavigation.navigate("CreateTrainingPlan");
+        const user = props.route.params.user;
+        props.navigation.push('CreateTrainingPlan',{user})
     }
 
     const editTrainingPlan = (id) => {
-        RootNavigation.navigate("EditTrainingPlan",{id});
+        const user = props.route.params.user;
+        props.navigation.push('EditTrainingPlan', {user: user, id: id})
     }
 
     const deleteTrainingPlan = (id) => {
@@ -76,14 +70,13 @@ export default function TrainingScreen(props, { navigation }) {
         snapshot.get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if(doc.data().id === id){
-                    firebase.firestore().collection('trainingPlans').doc(doc.id).delete().then(r => this.getData());
+                    firebase.firestore().collection('trainingPlans').doc(doc.id).delete().then(getData());
                 }
             })})
 
     }
 
-    const propStyle = (color, id) =>{
-        const idx = expandInfo.findIndex(element => element.id === id);
+    const propStyle = (color) =>{
         return(
      {
          backgroundColor: color,
@@ -117,7 +110,7 @@ export default function TrainingScreen(props, { navigation }) {
                                 <List.Accordion
                                     key={d.id}
                                     theme={{ colors: {primary: '#fff'}}}
-                                    style={propStyle(d.color,d.id)}
+                                    style={propStyle(d.color)}
                                     title={<Text textAlign={'center'} fontSize={d.name.length > 8 ? "2xl" : "3xl"} > {getLocale() === "pl" ? d.name : getLocale() === "fr" ? d.nameFr : d.nameEng} </Text>}
                                     expanded={getExpandInfo()}
                                     onPress={ () => handlePress1(d.id) }>
@@ -141,7 +134,7 @@ export default function TrainingScreen(props, { navigation }) {
                     }
                     </List.Section>
                 </ScrollView>
-                <Footer choice={2} user={props.route.params.user}/>
+                <Footer choice={2} user={props.route.params.user} navigation={props.navigation}/>
             </View>
         </NativeBaseProvider>
     )

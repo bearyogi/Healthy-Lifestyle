@@ -12,20 +12,16 @@ import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import Footer from '../../utils/Footer';
 import { List } from 'react-native-paper';
 import {NativeModules} from "react-native";
-import * as RootNavigation from "../../utils/RootNavigation";
 import styles from "./styles";
-export default function TrainingScreen(props, { navigation }) {
+export default function TrainingScreen(props) {
 
     const [dietInfo, setDietInfo] = useState([]);
     const [expandInfo, setExpandInfo] = useState([]);
-    const [value, setValue] = useState(0);
-    const entityRef = firebase.firestore().collection('entities')
-    const userID = props.route.params.user.id;
     const { t } = useTranslation();
 
 
     useEffect(() => {
-        getData();
+        getData().then(Promise.resolve);
     }, [])
 
     const getData = async () => {
@@ -61,11 +57,13 @@ export default function TrainingScreen(props, { navigation }) {
     }
 
     const addDietPlan = () => {
-        RootNavigation.navigate("CreateDietPlan");
+        const user = props.route.params.user;
+        props.navigation.push('CreateDietPlan',{user});
     }
 
     const editDietPlan = (id) => {
-        RootNavigation.navigate("EditDietPlan",{id});
+        const user = props.route.params.user;
+        props.navigation.push('EditDietPlan',{user: user, id: id});
     }
 
     const deleteDietPlan = (id) => {
@@ -73,15 +71,13 @@ export default function TrainingScreen(props, { navigation }) {
         snapshot.get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if(doc.data().id === id){
-                    firebase.firestore().collection('dietPlans').doc(doc.id).delete().then(r => this.getData());
+                    firebase.firestore().collection('dietPlans').doc(doc.id).delete().then(getData());
                 }
             })})
 
     }
 
-    const propStyle = (color, id) =>{
-        const idx = expandInfo.findIndex(element => element.id === id);
-        const expanded = expandInfo[idx];
+    const propStyle = (color) =>{
         return(
             {
                 backgroundColor: color,
@@ -113,7 +109,7 @@ export default function TrainingScreen(props, { navigation }) {
                                     <List.Accordion
                                         key={d.id}
                                         theme={{ colors: {primary: '#fff'}}}
-                                        style={propStyle(d.color,d.id)}
+                                        style={propStyle(d.color)}
                                         title={<Text textAlign={'center'} fontSize={d.name.length > 8 ? "2xl" : "3xl"}> {getLocale() === "pl" ? d.name : getLocale() === "fr" ? d.nameFr : d.nameEng} </Text>}
                                         expanded={getExpandInfo()}
                                         onPress={ () => handlePress1(d.id) }>
@@ -138,7 +134,7 @@ export default function TrainingScreen(props, { navigation }) {
                     }
                     </List.Section>
                 </ScrollView>
-                <Footer choice={3} user={props.route.params.user}/>
+                <Footer choice={3} user={props.route.params.user} navigation={props.navigation}/>
             </View>
         </NativeBaseProvider>
     )

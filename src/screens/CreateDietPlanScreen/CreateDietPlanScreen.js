@@ -5,10 +5,9 @@ import { firebase } from '../../firebase/config'
 import styles from './styles';
 import {useTranslation} from "react-i18next";
 import {NativeBaseProvider, extendTheme, FormControl, Input, Stack} from "native-base";
-import * as RootNavigation from "../../utils/RootNavigation";
 import ColorPicker from "react-native-wheel-color-picker";
 
-export default function CreateDietPlanScreen({navigation}) {
+export default function CreateDietPlanScreen() {
     const { t } = useTranslation();
     const [allValues, setAllValues] = useState({
         color: "#fff",
@@ -80,7 +79,8 @@ export default function CreateDietPlanScreen({navigation}) {
                 id: id
             }
             await firebase.firestore().collection('dietPlans').add(obj);
-            RootNavigation.navigate("Diet");
+            const user = props.route.params.user;
+            props.navigation.push('Diet',{user});
         }
     }
 
@@ -105,7 +105,8 @@ export default function CreateDietPlanScreen({navigation}) {
     }
 
     const returnToDietPlans = () => {
-        RootNavigation.navigate("Diet");
+        const user = props.route.params.user;
+        props.navigation.push('Diet',{user});
     }
 
     return (

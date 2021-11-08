@@ -48,7 +48,7 @@ export default function RegistrationScreen({navigation}) {
                     dailyGoalSteps: 0
                 }
                 const userDataRef = firebase.firestore().collection('userPersonalData');
-                userDataRef.doc(uid).set(userData);
+                userDataRef.doc(uid).set(userData).then(Promise.resolve);
 
                 const usersRef = firebase.firestore().collection('users')
                 usersRef

@@ -1,6 +1,5 @@
 import {Box, Center, HStack, Icon, Text} from "native-base";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import * as RootNavigation from './RootNavigation';
 import {AntDesign, FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import {useTranslation} from "react-i18next";
 import React from "react";
@@ -12,7 +11,7 @@ import React from "react";
             <Center flex={1}>
             </Center>
 
-            <HStack bg='green.500' alignItems="center" paddingTop={3} paddingBottom={2} safeAreaBottom shadow={6}>
+            <HStack bg='green.500' alignItems="center" paddingTop={3} paddingBottom={2} safeAreaBottom shadow={6} borderTopWidth={2} borderTopColor={'#1b7536'} borderTopRadius={2}>
                 <Pressable
                     cursor="pointer"
                     opacity={selected === 0 ? 1 : 0.5}
@@ -20,7 +19,8 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(0);
-                        RootNavigation.navigate("Home", {'user' : props.user})
+                        const user = props.user;
+                        props.navigation.push('Home', {user});
                     }}
                 >
                     <Center>
@@ -41,7 +41,8 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(1)
-                        RootNavigation.navigate('Map', {user: props.user})
+                        const user = props.user;
+                        props.navigation.push('Map', {user});
                     }}
                 >
                     <Center>
@@ -52,7 +53,7 @@ import React from "react";
                             size="xs"
                         />
 
-                        <Text color="white" fontSize={14}>{t('startTraining')}</Text>
+                        <Text color="white" fontSize={14}>{props.user.permissionLevel === 1 ?  t('categories') : t('startTraining')}</Text>
                     </Center>
                 </Pressable>
                 <Pressable
@@ -62,7 +63,8 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(2)
-                        RootNavigation.navigate('Training', {user: props.user})
+                        const user = props.user;
+                        props.navigation.push('Training', {user});
                     }}
                 >
                     <Center>
@@ -83,7 +85,8 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(3)
-                        RootNavigation.navigate('Diet', {user: props.user})
+                        const user = props.user;
+                        props.navigation.push('Diet', {user});
                     }}
                 >
                     <Center>
@@ -103,7 +106,8 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(4)
-                        RootNavigation.navigate('Profile', {user: props.user})
+                        const user = props.user;
+                        props.navigation.push('Profile', {user});
                     }}
                 >
                     <Center>

@@ -11,7 +11,6 @@ import {
     Stack, View
 } from "native-base";
 import {firebase} from './../../firebase/config';
-import * as RootNavigation from "../../utils/RootNavigation";
 import Footer from "../../utils/Footer";
 
 export default function ProfileScreen(props) {
@@ -38,7 +37,7 @@ export default function ProfileScreen(props) {
     const { t } = useTranslation();
 
     useEffect(() => {
-        getData();
+        getData().then(Promise.resolve);
     }, [])
     const getData = async () => {
         await firebase.firestore().collection('userPersonalData').doc(userID).get().then(snapshot => setAllValues(snapshot.data()));
@@ -56,7 +55,7 @@ export default function ProfileScreen(props) {
              dailyGoalCalories: allValues.dailyGoalCalories,
              dailyGoalDistance: allValues.dailyGoalDistance,
              dailyGoalSteps: allValues.dailyGoalSteps
-    })
+         }).then(Promise.resolve)
     }
     const numberChanged = (value, name) => {
 
@@ -66,14 +65,16 @@ export default function ProfileScreen(props) {
     const onUpdateButton = () => {
         if (validation() === 0){
             setDate();
-            RootNavigation.navigate('Home', props.route.params.user)
+            const user =  props.route.params.user;
+            props.navigation.push('Home',{user})
         }
 
     }
 
     const onLogOutButton = () => {
-        firebase.auth().signOut();
-        RootNavigation.navigate('Login')
+        firebase.auth().signOut().then(Promise.resolve);
+        const user = props.route.params.user;
+        props.navigation.push('Login',{user})
     }
 
     function validation()  {
@@ -377,7 +378,7 @@ export default function ProfileScreen(props) {
 
                 </Center>
             </ScrollView>
-            <Footer choice={4} user={props.route.params.user}/>
+            <Footer choice={4} user={props.route.params.user} navigation={props.navigation}/>
         </View>
         </NativeBaseProvider>
     )

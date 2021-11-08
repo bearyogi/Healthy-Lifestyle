@@ -6,10 +6,7 @@ import styles from './styles';
 import {useTranslation} from "react-i18next";
 import {NativeBaseProvider, extendTheme, FormControl, Input, Stack} from "native-base";
 
-import Footer from "../../utils/Footer";
-import * as RootNavigation from "../../utils/RootNavigation";
-
-export default function CreateCategoryScreen({navigation}) {
+export default function CreateCategoryScreen() {
     const { t } = useTranslation();
     const [allValues, setAllValues] = useState({
         title: "",
@@ -56,12 +53,14 @@ export default function CreateCategoryScreen({navigation}) {
                 id: id
             }
             await firebase.firestore().collection('trainingCategory').add(obj);
-            RootNavigation.navigate("Map");
+            const user = props.route.params.user;
+            props.navigation.push('Map',{user});
         }
     }
 
     const returnToMap = () => {
-        RootNavigation.navigate("Map");
+        const user = props.route.params.user;
+        props.navigation.push('Map',{user});
     }
 
     return (

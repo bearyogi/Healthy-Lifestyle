@@ -6,7 +6,6 @@ import {useTranslation} from "react-i18next";
 import {Button, Heading, NativeBaseProvider, ScrollView} from "native-base";
 import {List} from "react-native-paper";
 import Footer from "../../utils/Footer";
-import * as RootNavigation from "../../utils/RootNavigation";
 
 export default function EditUsersHistoryScreen(props) {
 
@@ -53,7 +52,8 @@ export default function EditUsersHistoryScreen(props) {
     }
 
     const editHistory = (id) => {
-        RootNavigation.navigate("EditHistory",{id: id});
+        const user = props.route.params.user;
+        props.navigation.push('EditHistory', {user: user, id: id});
     }
 
     const deleteHistory = (id) => {
@@ -124,7 +124,7 @@ export default function EditUsersHistoryScreen(props) {
                         }
                     </List.Section>
                 </ScrollView>
-                <Footer choice={6} user={props.route.params.user}/>
+                <Footer choice={6} user={props.route.params.user} navigation={props.navigation}/>
             </View>
          </NativeBaseProvider>
     )

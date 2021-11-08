@@ -141,7 +141,7 @@ export default function HistoryScreen(props, { }) {
                 }
                 </List.Section>
             </ScrollView>
-            <Footer choice={6} user={props.route.params.user}/>
+            <Footer choice={6} user={props.route.params.user} navigation={props.navigation}/>
         </View>
         </NativeBaseProvider>
     )

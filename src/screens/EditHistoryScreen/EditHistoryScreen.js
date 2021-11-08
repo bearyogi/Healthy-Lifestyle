@@ -6,8 +6,6 @@ import styles from './styles';
 import {useTranslation} from "react-i18next";
 import {NativeBaseProvider, extendTheme, FormControl, Input, Stack, CheckIcon, Select} from "native-base";
 
-import * as RootNavigation from "../../utils/RootNavigation";
-
 export default function EditHistoryScreen(props) {
 
     const [allValues, setAllValues] = useState({
@@ -124,11 +122,13 @@ export default function EditHistoryScreen(props) {
                     firebase.firestore().collection('gpsTrainingInfo').doc(doc.id).update(obj);
                 }
             })})
-        RootNavigation.navigate("EditUsersHistory");
+        const user = props.route.params.user;
+        props.navigation.push('EditUsersHistory',{user});
     }
 
     const returnToMap = () => {
-        RootNavigation.navigate("EditUsersHistory");
+        const user = props.route.params.user;
+        props.navigation.push('EditUsersHistory',{user});
     }
 
     return (

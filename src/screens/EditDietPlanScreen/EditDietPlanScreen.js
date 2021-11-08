@@ -5,8 +5,6 @@ import { firebase } from '../../firebase/config'
 import styles from './styles';
 import {useTranslation} from "react-i18next";
 import {NativeBaseProvider, extendTheme, FormControl, Input, Stack} from "native-base";
-
-import * as RootNavigation from "../../utils/RootNavigation";
 import ColorPicker from "react-native-wheel-color-picker";
 
 export default function EditDietPlanScreen(props) {
@@ -112,12 +110,14 @@ export default function EditDietPlanScreen(props) {
                     }
                 })
             })
-            RootNavigation.navigate("Diet");
+            const user = props.route.params.user;
+            props.navigation.push('Diet',{user});
         }
     }
 
     const returnToDietPlans = () => {
-        RootNavigation.navigate("Diet");
+        const user = props.route.params.user;
+        props.navigation.push('Diet',{user});
     }
 
     return (

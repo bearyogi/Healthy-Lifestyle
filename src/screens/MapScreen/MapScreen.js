@@ -10,7 +10,6 @@ import haversine from "haversine";
 import { installWebGeolocationPolyfill} from "expo-location";
 import {Box, Button, Icon, IconButton, Modal, ScrollView} from "native-base";
 import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
-import * as RootNavigation from "../../utils/RootNavigation";
 import {TouchableOpacity} from 'react-native';
 import {firebase} from "../../firebase/config";
 import { Ionicons } from '@expo/vector-icons';
@@ -67,7 +66,9 @@ class TrackCurrentUser extends Component{
     componentWillUnmount() {
         this.setState({displayCategory: 0})
         this.render();
-        RootNavigation.navigate('Home', this.props.route.params.user);
+        const user = this.props.route.params.user;
+        this.props.navigation.push('Home',{user});
+        //RootNavigation.navigate('Home', this.props.route.params.user);
     }
 
     //   getting the current Location of a user...
@@ -190,7 +191,6 @@ class TrackCurrentUser extends Component{
     async stopActivity() {
         const date = new Date();
         const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        const dateHMS = this.secondsToHms(this.state.timeStarted);
         this.setState({end: 1})
 
         const data = {
@@ -207,16 +207,18 @@ class TrackCurrentUser extends Component{
             initialRegion: this.state.initialRegion,
             region: this.state.region,
         }
-        firebase.firestore().collection('gpsTrainingInfo').add(data);
+        firebase.firestore().collection('gpsTrainingInfo').add(data).then(Promise.resolve);
         return null;
     }
 
     addCategory = () => {
-        RootNavigation.navigate("CreateCategory");
+        const user = this.props.route.params.user;
+        this.props.navigation.push('CreateCategory',{user})
     }
 
     editCategory = (id) => {
-        RootNavigation.navigate("EditCategory",{id});
+        const user = this.props.route.params.user;
+        this.props.navigation.push('EditCategory',{user: user, id: id})
     }
 
       deleteCategory (id) {
@@ -224,8 +226,8 @@ class TrackCurrentUser extends Component{
           snapshot.get().then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
                   if(doc.data().id === id){
-                      firebase.firestore().collection('trainingCategory').doc(doc.id).delete();
-                      this.getData();
+                      firebase.firestore().collection('trainingCategory').doc(doc.id).delete().then(Promise.resolve);
+                      this.getData().then(Promise.resolve);
                   }
               })})
 
@@ -296,7 +298,7 @@ class TrackCurrentUser extends Component{
                             </Text>
                             <Hidden>
                                 <IconButton
-                                    icon={<Icon as={Ionicons} name="stop-circle-outline" onPress={setTimeout(() => {this.getCurrentLocation()},500)}/>}
+                                    icon={<Icon as={Ionicons} name="stop-circle-outline" onPress={setTimeout(() => {this.getCurrentLocation().then(Promise.resolve)},500)}/>}
                                     borderRadius="full"
                                     style={styles.stopIcon}
                                     _icon={{
@@ -401,7 +403,7 @@ class TrackCurrentUser extends Component{
                                     );
                                 })}
                         </ScrollView>
-                    <Footer choice={0} user={this.props.route.params.user}/>
+                    <Footer choice={1} user={this.props.route.params.user} navigation={this.props.navigation}/>
                         </View>
                 )}
             </NativeBaseProvider>

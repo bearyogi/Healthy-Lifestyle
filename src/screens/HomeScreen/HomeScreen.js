@@ -4,7 +4,6 @@ import {useTranslation} from "react-i18next";
 import {Box, Heading, HStack, Progress, ScrollView,Text, View, VStack} from "native-base";
 import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import Footer from '../../utils/Footer';
-import * as RootNavigation from "../../utils/RootNavigation";
 import styles from "../HomeScreen/styles"
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
@@ -52,7 +51,7 @@ export default function HomeScreen(props) {
     }
 
     useEffect(() => {
-        getData();
+        getData().then(Promise.resolve);
         pickGreeting();
 
     },[] )
@@ -154,7 +153,7 @@ export default function HomeScreen(props) {
 
                     </VStack>
                     <Pressable
-                        onPress={() => RootNavigation.navigate('History', {user})}
+                        onPress={() => props.navigation.push('History',{user})}
                         style={styles.press}
                     >
                         <Box p="5" rounded="8" bg="#8ccdff">
@@ -182,7 +181,7 @@ export default function HomeScreen(props) {
 
                     </Pressable></View> : <View style={{backgroundColor: '#fff', marginBottom: '45%'} }>
                         <Pressable
-                            onPress={() => RootNavigation.navigate('Map', {user})}
+                            onPress={() => props.navigation.push('Map',{user})}
                             style={styles.press1}>
                             <Box p="5" rounded="8" bg="#c0b5ff" style={{flex: 1}}>
                                 <HStack alignItems="flex-start">
@@ -194,7 +193,7 @@ export default function HomeScreen(props) {
                         </Pressable>
 
                         <Pressable
-                            onPress={() => RootNavigation.navigate('Training', {user})}
+                            onPress={() => props.navigation.push('Training',{user})}
                             style={styles.press2}>
                             <Box p="5" rounded="8" bg="#ffccb8" style={{flex: 1}}>
                                 <HStack alignItems="flex-start">
@@ -206,7 +205,7 @@ export default function HomeScreen(props) {
                         </Pressable>
 
                         <Pressable
-                            onPress={() => RootNavigation.navigate('Diet', {user})}
+                            onPress={() => props.navigation.push('Diet',{user})}
                             style={styles.press3}>
                             <Box p="5" rounded="8" bg="#8ccdff" style={{flex: 1}}>
                                 <HStack alignItems="flex-start">
@@ -218,7 +217,7 @@ export default function HomeScreen(props) {
                         </Pressable>
 
                         <Pressable
-                            onPress={() => RootNavigation.navigate('EditUsersHistory', {user})}
+                            onPress={() => props.navigation.push('EditUsersHistory',{user})}
                             style={styles.press4}>
                             <Box p="5" rounded="8" bg="#87faeb" style={{flex: 1}}>
                                 <HStack alignItems="flex-start">
@@ -235,7 +234,7 @@ export default function HomeScreen(props) {
                 </VStack>
             </Box>
             </ScrollView>
-            <Footer choice={0} user={user}/>
+            <Footer choice={0} user={user} navigation={props.navigation}/>
         </NativeBaseProvider>
     )
 }

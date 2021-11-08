@@ -5,8 +5,6 @@ import { firebase } from '../../firebase/config'
 import styles from './styles';
 import {useTranslation} from "react-i18next";
 import {NativeBaseProvider, extendTheme, FormControl, Input, Stack} from "native-base";
-
-import * as RootNavigation from "../../utils/RootNavigation";
 import ColorPicker from "react-native-wheel-color-picker";
 
 export default function EditTrainingPlanScreen(props) {
@@ -111,12 +109,14 @@ export default function EditTrainingPlanScreen(props) {
                     }
                 })
             })
-            RootNavigation.navigate("Training");
+            const user = props.route.params.user;
+            props.navigation.push('Training',{user});
         }
     }
 
     const returnToTrainingPlans = () => {
-        RootNavigation.navigate("Training");
+        const user = props.route.params.user;
+        props.navigation.push('Training',{user});
     }
 
     return (
