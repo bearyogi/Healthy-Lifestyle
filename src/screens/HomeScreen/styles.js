@@ -66,6 +66,7 @@ export default StyleSheet.create({
         borderWidth: 3,
         borderColor: '#b9e38f',
         padding: 15,
+        marginBottom: 15
     },
     progressBar: {
         height: 15,
@@ -78,7 +79,53 @@ export default StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 15,
         borderWidth: 3,
+        borderColor: '#3a7ef2',
+        borderRadius: 11
+    },
+    press1: {
+        width: '92%',
+        height: '20%',
+        alignSelf: 'center',
+        marginBottom: 15,
+        borderWidth: 3,
+        borderColor: '#a165c9',
+        borderRadius: 11
+    },
+    press2: {
+        width: '92%',
+        height: '20%',
+        alignSelf: 'center',
+        marginBottom: 15,
+        borderWidth: 3,
+        borderColor: '#c44f4b',
+        borderRadius: 11
+    },
+
+    press3: {
+        width: '92%',
+        height: '20%',
+        alignSelf: 'center',
+        marginBottom: 15,
+        borderWidth: 3,
         borderColor: '#749ded',
         borderRadius: 11
+    },
+    press4: {
+        width: '92%',
+        height: '20%',
+        alignSelf: 'center',
+        marginBottom: 15,
+        borderWidth: 3,
+        borderColor: '#19b5a1',
+        borderRadius: 11
+    },
+    headingUser: {
+        borderBottomWidth: 4,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        width: '90%',
+        alignSelf : 'center',
+        borderBottomColor: '#000'
     }
+
 })

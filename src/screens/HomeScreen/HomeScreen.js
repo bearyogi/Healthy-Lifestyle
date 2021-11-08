@@ -4,7 +4,6 @@ import {useTranslation} from "react-i18next";
 import {Box, Heading, HStack, Progress, ScrollView,Text, View, VStack} from "native-base";
 import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import Footer from '../../utils/Footer';
-import {Button} from "native-base";
 import * as RootNavigation from "../../utils/RootNavigation";
 import styles from "../HomeScreen/styles"
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
@@ -37,7 +36,9 @@ export default function HomeScreen(props) {
 
     const pickGreeting = () => {
         let h = new Date().getHours();
-        if(h > 4 && h < 12){
+        if(user.permissionLevel === 1) {
+            setGreeting("GreetingsEmployee")
+        } else if(h > 4 && h < 12){
             setGreeting("GreetingsMorning");
         }else if(h >= 12 && h < 13){
             setGreeting("GreetingsNoon");
@@ -53,6 +54,7 @@ export default function HomeScreen(props) {
     useEffect(() => {
         getData();
         pickGreeting();
+
     },[] )
 
     const getData = async () => {
@@ -128,16 +130,19 @@ export default function HomeScreen(props) {
     }
 
     return (
-        <NativeBaseProvider >
+        <NativeBaseProvider>
             <ScrollView style={{flex: 1, height: '100%'}}>
-            <Box w="100%" h="94%" bg="white">
+            <Box w="100%" h="100%" bg="white" >
                 <VStack space="md" marginTop={7}>
+                    <View style={styles.headingUser}>
                     <Heading marginTop={10} textAlign="center" >
                         {t('Hello')}, {allValues.name}
                     </Heading>
                     <Heading padding={4} size="md" textAlign="center">
                         {t(greeting)}
                     </Heading>
+                    </View>
+                    {user.permissionLevel === 0 ? <View>
                     <VStack style={styles.dailyProgress} mx={4} space="md">
                         <Heading size="md">{t('dailyGoalsMain')}:</Heading>
                         <Progress style={styles.progressBar} colorScheme="primary" value={(dailyActivityInfo.calories/allValues.dailyGoalCalories)*100} />
@@ -175,7 +180,55 @@ export default function HomeScreen(props) {
 
                         </Box>
 
-                    </Pressable>
+                    </Pressable></View> : <View style={{backgroundColor: '#fff', marginBottom: '45%'} }>
+                        <Pressable
+                            onPress={() => RootNavigation.navigate('Map', {user})}
+                            style={styles.press1}>
+                            <Box p="5" rounded="8" bg="#c0b5ff" style={{flex: 1}}>
+                                <HStack alignItems="flex-start">
+                                    <Text fontSize={25} color="#000" fontWeight="medium">
+                                        {t('employeeGoToMap')} &#10140;
+                                    </Text>
+                                </HStack>
+                            </Box>
+                        </Pressable>
+
+                        <Pressable
+                            onPress={() => RootNavigation.navigate('Training', {user})}
+                            style={styles.press2}>
+                            <Box p="5" rounded="8" bg="#ffccb8" style={{flex: 1}}>
+                                <HStack alignItems="flex-start">
+                                    <Text fontSize={25} color="#000" fontWeight="medium">
+                                        {t('employeeGoToTraining')} &#10140;
+                                    </Text>
+                                </HStack>
+                            </Box>
+                        </Pressable>
+
+                        <Pressable
+                            onPress={() => RootNavigation.navigate('Diet', {user})}
+                            style={styles.press3}>
+                            <Box p="5" rounded="8" bg="#8ccdff" style={{flex: 1}}>
+                                <HStack alignItems="flex-start">
+                                    <Text fontSize={25} color="#000" fontWeight="medium">
+                                        {t('employeeGoToDiet')} &#10140;
+                                    </Text>
+                                </HStack>
+                            </Box>
+                        </Pressable>
+
+                        <Pressable
+                            onPress={() => RootNavigation.navigate('EditUsersHistory', {user})}
+                            style={styles.press4}>
+                            <Box p="5" rounded="8" bg="#87faeb" style={{flex: 1}}>
+                                <HStack alignItems="flex-start">
+                                    <Text fontSize={25} color="#000" fontWeight="medium">
+                                        {t('employeeGoToHistory')} &#10140;
+                                    </Text>
+                                </HStack>
+                            </Box>
+                        </Pressable>
+                    </View> }
 
 
 
@@ -183,7 +236,6 @@ export default function HomeScreen(props) {
             </Box>
             </ScrollView>
             <Footer choice={0} user={user}/>
-
         </NativeBaseProvider>
     )
 }

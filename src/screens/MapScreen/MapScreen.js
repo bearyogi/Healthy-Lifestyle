@@ -34,14 +34,16 @@ class TrackCurrentUser extends Component{
         prevLatLng: {}, // contain pass lat and lang values
         timeStarted: new Date().getTime(),
         timeActual: 0,
-        hmsStarted: new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(),
+        hmsStarted: this.getHms(),
         displayCategory: 1,
         trainingCategoryInfo: [],
-        choosenCategoryInfo: [],
+        choosenCategoryInfo: "",
         choosenCategoryNumber: 0,
         locale: "",
         begin: 0,
-        end: 0
+        end: 0,
+        userCred: "",
+        id: 0
     };
 
     constructor(props) {
@@ -52,6 +54,14 @@ class TrackCurrentUser extends Component{
     //   getLocation Permission and call getCurrentLocation method
     componentDidMount() {
         this.getData().then(Promise.resolve());
+    }
+
+    getHms() {
+        let min = new Date().getMinutes();
+        if(min.toString().length < 2){
+            min = "0" + min;
+        }
+        return new Date().getHours() + ":" + min  + ":" + new Date().getSeconds()
     }
 
     componentWillUnmount() {
@@ -73,6 +83,27 @@ class TrackCurrentUser extends Component{
             this.setState({locale: NativeModules.I18nManager.localeIdentifier.substring(0,2)})
             this.setState({trainingCategoryInfo: tempDoc})
         })
+
+        const snap = await firebase.firestore().collection('users');
+        snap.get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().id === this.props.route.params.user.id) {
+                    this.setState({userCred: doc.data().name + " " + doc.data().surname})
+                }
+            })
+        })
+
+        let idTraining = 0;
+        const snapshot2 = await firebase.firestore().collection('gpsTrainingInfo');
+        await snapshot2.get().then((querySnapshot2) => {
+            querySnapshot2.forEach((doc) => {
+                if (doc.data().id >= idTraining) {
+                    idTraining = doc.data().id + 1;
+                }
+            })
+            this.setState({id: idTraining});
+        })
+
     }
 
     getCurrentLocation =  async () => {
@@ -137,11 +168,11 @@ class TrackCurrentUser extends Component{
 
     calcCalories = newLatLng => {
         const { prevLatLng } = this.state;
-        return (haversine(prevLatLng, newLatLng) * this.state.choosenCategoryInfo[0].caloriePerKm) || 0;
+        return (haversine(prevLatLng, newLatLng) * this.state.choosenCategoryInfo.caloriePerKm) || 0;
     };
 
     setCategory = number => {
-        this.setState({choosenCategoryInfo: [...this.state.choosenCategoryInfo, this.state.trainingCategoryInfo[number-1]]})
+        this.setState({choosenCategoryInfo: this.state.trainingCategoryInfo[number-1]})
         this.setState({displayCategory: 0})
     }
 
@@ -156,12 +187,14 @@ class TrackCurrentUser extends Component{
         return null;
     }
 
-    stopActivity() {
+    async stopActivity() {
         const date = new Date();
-        const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1)+ "-" + date.getDate();
+        const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         const dateHMS = this.secondsToHms(this.state.timeStarted);
         this.setState({end: 1})
+
         const data = {
+            id: this.state.id,
             activityType: this.state.choosenCategoryInfo,
             coords: this.state.routeCoordinates,
             date: dateYMD,
@@ -169,7 +202,8 @@ class TrackCurrentUser extends Component{
             distance: this.state.distanceTravelled.toFixed(2),
             calories: this.state.caloriesBurned.toFixed(0),
             time: this.secondsToHms(this.state.timeActual - this.state.timeStarted),
-             userId: this.props.route.params.user.id,
+            userId: this.props.route.params.user.id,
+            userCredensials: this.state.userCred,
             initialRegion: this.state.initialRegion,
             region: this.state.region,
         }
@@ -182,7 +216,7 @@ class TrackCurrentUser extends Component{
     }
 
     editCategory = (id) => {
-        console.log("WITAM")
+        RootNavigation.navigate("EditCategory",{id});
     }
 
       deleteCategory (id) {
@@ -201,8 +235,9 @@ class TrackCurrentUser extends Component{
         const dispCat = this.state.displayCategory;
         return (
             <NativeBaseProvider>
-                {this.props.route.params.user === 0 ?
-                (<View style={{ flex: 1 }}> {dispCat ? (<View style={{ flex: 1 }}>
+                {this.props.route.params.user.permissionLevel === 0 ?
+                <View style={{ flex: 1 }}>
+                    {dispCat ? <View style={{ flex: 1 }}>
                     <Modal isOpen={dispCat} onClose={() => this.componentWillUnmount()}>
                     <Modal.Content maxWidth="400px">
                         <Modal.CloseButton style={styles.closeButton}/>
@@ -223,7 +258,7 @@ class TrackCurrentUser extends Component{
                         </Modal.Footer>
                     </Modal.Content>
                 </Modal>
-            </View>) : this.state.end === 0 ? (<View style={styles.mapContainer}>
+            </View> : this.state.end === 0 ? (<View style={styles.mapContainer}>
                     <MapView
                         style={{ flex: 0.75 }}
                         provider={PROVIDER_GOOGLE}
@@ -329,7 +364,7 @@ class TrackCurrentUser extends Component{
 
                                 </MapView>
                                     </View>
-                            <Text style={styles.summaryText1}>{this.state.locale === 'pl' ? "Aktywność" : this.state.locale === 'fr' ? "TEMP" : "Activity"}: {this.state.locale === 'pl' ? this.state.choosenCategoryInfo[0].title : this.state.locale === 'fr' ? this.state.choosenCategoryInfo[0].titleFr : this.state.choosenCategoryInfo[0].titleEng}</Text>
+                            <Text style={styles.summaryText1}>{this.state.locale === 'pl' ? "Aktywność" : this.state.locale === 'fr' ? "TEMP" : "Activity"}: {this.state.locale === 'pl' ? this.state.choosenCategoryInfo.title : this.state.locale === 'fr' ? this.state.choosenCategoryInfo.titleFr : this.state.choosenCategoryInfo.titleEng}</Text>
                             <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Czas trwania" : this.state.locale === 'fr' ? "TEMP" : "Duration"}: {this.secondsToHms(this.state.timeActual-this.state.timeStarted)}</Text>
                             <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Spalone kalorie" : this.state.locale === 'fr' ? "TEMP" : "Calories burned"}: {this.state.caloriesBurned.toPrecision(2)} </Text>
                             <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Dystans" : this.state.locale === 'fr' ? "Distance" : "Distance"}: {this.state.distanceTravelled.toPrecision(2)} km</Text>
@@ -343,7 +378,7 @@ class TrackCurrentUser extends Component{
                     </Modal.Footer>
                     </Modal.Content>
                     </Modal>
-                </View>)}</View>) : (<View style={{flex: 1, height: '100%'}}>
+                </View>)}</View> : (<View style={{flex: 1, height: '100%'}}>
                         <ScrollView style={{flex: 1, height: '100%', backgroundColor: '#f5f9ff'}}>
                             <Text style={styles.employeeTextAdd}> {this.state.locale === 'pl' ? "Dodaj kategorię treningową " : this.state.locale === 'fr' ? "FRTEXT" : "Add new training category"} </Text>
                             <Button onPress={() => this.addCategory() }  style ={styles.addButton}> <Text style={styles.addButtonText}> {this.state.locale === 'pl' ? "Dodaj" : this.state.locale === 'fr' ? "t" : "Add"} </Text> </Button>

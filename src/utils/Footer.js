@@ -20,7 +20,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(0);
-                        RootNavigation.navigate('Home', {user: props.user})
+                        RootNavigation.navigate("Home", {'user' : props.user})
                     }}
                 >
                     <Center>

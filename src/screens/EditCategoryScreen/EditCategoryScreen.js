@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase/config'
@@ -6,11 +6,10 @@ import styles from './styles';
 import {useTranslation} from "react-i18next";
 import {NativeBaseProvider, extendTheme, FormControl, Input, Stack} from "native-base";
 
-import Footer from "../../utils/Footer";
 import * as RootNavigation from "../../utils/RootNavigation";
 
-export default function CreateCategoryScreen({navigation}) {
-    const { t } = useTranslation();
+export default function EditCategoryScreen(props) {
+
     const [allValues, setAllValues] = useState({
         title: "",
         titleEng: "",
@@ -18,6 +17,32 @@ export default function CreateCategoryScreen({navigation}) {
         caloriePerKm: 0,
         id: 0
     });
+
+    useEffect(() => {
+        getData().then(Promise.resolve());
+    },[] )
+
+    const getData = async () => {
+        const snapshot = firebase.firestore().collection('trainingCategory');
+        await snapshot.get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+
+                if (doc.data().id === props.route.params.id) {
+                    let obj = {
+                        title: doc.data().title,
+                        titleEng: doc.data().titleEng,
+                        titleFr: doc.data().titleFr,
+                        caloriePerKm: doc.data().caloriePerKm,
+                        id: props.route.params.id
+                    }
+                    setAllValues(obj);
+                }
+            })
+        })
+    }
+
+
+    const { t } = useTranslation();
 
     const theme = extendTheme({
         components: {
@@ -36,28 +61,15 @@ export default function CreateCategoryScreen({navigation}) {
         }
     });
 
-    const createCategory = async () => {
-        if (allValues.title !== "" && allValues.titleEng !== "" && allValues.titleFr !== "" && allValues.caloriePerKm !== 0) {
-            let id = 0;
-            const snapshot = firebase.firestore().collection('trainingCategory');
-            await snapshot.get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-
-                    if (doc.data().id >= id) {
-                        id = doc.data().id + 1;
-                    }
-                })
-            })
-            let obj = {
-                title: allValues.title,
-                titleEng: allValues.titleEng,
-                titleFr: allValues.titleFr,
-                caloriePerKm: allValues.caloriePerKm,
-                id: id
-            }
-            await firebase.firestore().collection('trainingCategory').add(obj);
-            RootNavigation.navigate("Map");
-        }
+    const editCategory = async ()  => {
+        const snapshot = firebase.firestore().collection('trainingCategory');
+        await snapshot.get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if(doc.data().id === allValues.id){
+                    firebase.firestore().collection('trainingCategory').doc(doc.id).update(allValues);
+                }
+            })})
+        RootNavigation.navigate("Map");
     }
 
     const returnToMap = () => {
@@ -78,6 +90,7 @@ export default function CreateCategoryScreen({navigation}) {
                             name="goalSteps"
                             placeholder= {t('categoryEnterText')}
                             onChangeText={(any) => setAllValues({...allValues, ["title"]: any})}
+                            value={allValues.title}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -101,6 +114,7 @@ export default function CreateCategoryScreen({navigation}) {
                             name="goalSteps"
                             placeholder= {t('categoryEnterTextEng')}
                             onChangeText={(any) => setAllValues({...allValues, ["titleEng"]: any})}
+                            value={allValues.titleEng}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -124,6 +138,7 @@ export default function CreateCategoryScreen({navigation}) {
                             name="goalSteps"
                             placeholder= {t('categoryEnterTextFr')}
                             onChangeText={(any) => setAllValues({...allValues, ["titleFr"]: any})}
+                            value={allValues.titleFr}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -148,6 +163,7 @@ export default function CreateCategoryScreen({navigation}) {
                             placeholder= {t('categoryEnterCalorie')}
                             keyboardType="numeric"
                             onChangeText={(any) => setAllValues({...allValues, ["caloriePerKm"]: any})}
+                            value={allValues.caloriePerKm.toString()}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -165,8 +181,8 @@ export default function CreateCategoryScreen({navigation}) {
 
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => createCategory()}>
-                    <Text style={styles.buttonTitle}>{t('createCategory')}</Text>
+                    onPress={() => editCategory()}>
+                    <Text style={styles.buttonTitle}>{t('editCategory')}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity

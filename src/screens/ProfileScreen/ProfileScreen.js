@@ -28,7 +28,7 @@ export default function ProfileScreen(props) {
         dailyGoalDistance: 0,
         dailyGoalSteps: 0,
     });
-    const [expanded1, setExpanded1] = React.useState(true);
+    const [expanded1, setExpanded1] = React.useState(false);
     const [expanded2, setExpanded2] = React.useState(false);
     const [expanded3, setExpanded3] = React.useState(false);
     const handlePress1 = () => setExpanded1(!expanded1);
@@ -64,15 +64,29 @@ export default function ProfileScreen(props) {
         setAllValues({...allValues, [name]: val})
     }
     const onUpdateButton = () => {
-        if (validation()){
+        if (validation() === 0){
             setDate();
             RootNavigation.navigate('Home', props.route.params.user)
         }
 
     }
 
-    const validation = () => {
-        return true;
+    const onLogOutButton = () => {
+        firebase.auth().signOut();
+        RootNavigation.navigate('Login')
+    }
+
+    function validation()  {
+        let check = 0;
+
+        if(allValues.name === "" || allValues.surname === "" || allValues.gender > 2
+        || allValues.email === "" || allValues.age < 1 || allValues.height < 50 || allValues.weight < 10
+        || allValues.dailyGoalSteps === 0 || allValues.dailyGoalDistance === 0 || allValues.dailyGoalCalories === 0
+        || allValues.age > 120 || allValues.height > 220 || allValues.weight > 500){
+            check = 1;
+        }
+
+        return check;
     }
     return (
 
@@ -160,7 +174,7 @@ export default function ProfileScreen(props) {
                             </Stack>
                         </FormControl>
 
-                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!allValues.email}>
+                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!allValues.email} isDisabled={true}>
                             <Stack mx={2}>
                                 <FormControl.Label>{t('email')}:</FormControl.Label>
                                 <Input
@@ -190,7 +204,7 @@ export default function ProfileScreen(props) {
                         expanded={expanded2}
                         onPress={handlePress2}>
 
-                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!allValues.age}>
+                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!allValues.age || allValues.age < 1 || allValues.age > 120}>
                             <Stack mx={2}>
                                 <FormControl.Label>{t('age')}:</FormControl.Label>
                                 <Input
@@ -209,14 +223,14 @@ export default function ProfileScreen(props) {
                                 />
 
                                 <FormControl.ErrorMessage my={2}>
-                                    {t('emptyFieldWarning')}
+                                    {allValues.age === "" ? t('emptyFieldWarning') : allValues.age < 1 ? t('tooYoungWarning') : t('tooOldWarning')}
                                 </FormControl.ErrorMessage>
                             </Stack>
                         </FormControl>
 
 
 
-                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!(allValues.height+"")}>
+                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!(allValues.height+"") || allValues.height < 50 || allValues.height > 220}>
                             <Stack mx={2}>
                                 <FormControl.Label>{t('height')}:</FormControl.Label>
                                 <Input
@@ -234,12 +248,12 @@ export default function ProfileScreen(props) {
                                     }}
                                 />
                                 <FormControl.ErrorMessage my={2}>
-                                    {t('emptyFieldWarning')}
+                                    {allValues.height === "" ? t('emptyFieldWarning') : allValues.height < 50 ? t('tooSmallWarning') : t('tooBigWarning')}
                                 </FormControl.ErrorMessage>
                             </Stack>
                         </FormControl>
 
-                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!(allValues.weight+"")}>
+                        <FormControl isRequired backgroundColor={'#fff'} isInvalid={!(allValues.weight+"") || allValues.weight < 10 || allValues.weight > 500}>
                             <Stack mx={2}>
                                 <FormControl.Label>{t('weight')}:</FormControl.Label>
                                 <Input
@@ -257,7 +271,7 @@ export default function ProfileScreen(props) {
                                     }}
                                 />
                                 <FormControl.ErrorMessage my={2}>
-                                    {t('emptyFieldWarning')}
+                                    {allValues.weight === "" ? t('emptyFieldWarning') : allValues.weight < 10 ? t('tooThinWarning') : t('tooFatWarning')}
                                 </FormControl.ErrorMessage>
                             </Stack>
                         </FormControl>
@@ -345,11 +359,20 @@ export default function ProfileScreen(props) {
                         onPress={onUpdateButton}
                         width={'50%'}
                         height={60}
-                        marginBottom={50}
-                        marginTop={50}
+                        marginBottom={10}
+                        marginTop={10}
                         backgroundColor={'green.400'}
                     >
                         {t('updateButton')}
+                    </Button>
+
+                    <Button
+                        onPress={onLogOutButton}
+                        width={'50%'}
+                        height={60}
+                        backgroundColor={'orange.400'}
+                    >
+                        {t('logOutButton')}
                     </Button>
 
                 </Center>

@@ -55,5 +55,75 @@ export default StyleSheet.create({
     },
     sectionList: {
         backgroundColor: '#fff'
-    }
+    },
+    endButtonModal:{
+        width: '100%',
+        height: 80,
+        backgroundColor: "#4bd65d"
+    },
+    editButton: {
+        marginLeft: 40,
+        alignSelf: 'center',
+        marginTop: 2,
+        marginBottom: 10,
+        borderWidth: 2,
+        borderColor: '#2e803e',
+        backgroundColor: "#5ee078",
+        width: '30%',
+        height: '100%',
+    },
+    deleteButton: {
+        alignSelf: 'center',
+        marginLeft: '19%',
+        marginTop: 2,
+        backgroundColor: "#f5342f",
+        marginBottom: 10,
+        width: '30%',
+        height: '100%',
+        borderWidth: 2,
+        borderColor: '#b52626',
+    },
+    addButton: {
+        alignSelf: 'center',
+        marginTop: 12,
+        backgroundColor: "#80e0d9",
+        width: '90%',
+        height: 70,
+        borderWidth: 2,
+        borderColor: '#4fb8b0',
+        borderRadius: 30,
+    },
+    addButtonText: {
+        alignSelf: 'center',
+        fontSize: 22,
+        color: '#fff'
+    },
+    employeeText: {
+        paddingTop: 18,
+        marginBottom: 10,
+        textAlign: "center",
+        textTransform: "uppercase",
+        fontSize: 20,
+        color: '#000',
+        fontWeight: "bold"
+    },
+    employeeTextAdd: {
+        marginTop: 50,
+        paddingTop: 18,
+        marginBottom: 3,
+        textAlign: "center",
+        textTransform: "uppercase",
+        fontSize: 20,
+        color: '#000',
+        fontWeight: "bold"
+    },
+    employeeCategoryText: {
+        paddingTop: 10,
+        textAlign: "center",
+        textTransform: "uppercase",
+        fontSize: 17,
+        color: '#fff',
+        fontWeight: "bold"
+    },
+
 })

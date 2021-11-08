@@ -243,7 +243,7 @@ export default StyleSheet.create({
     },
     addButtonText: {
         alignSelf: 'center',
-        fontSize: 30,
+        fontSize: 22,
         color: '#fff'
     }
 })

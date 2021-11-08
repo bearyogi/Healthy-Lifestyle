@@ -83,6 +83,7 @@ export default function HistoryScreen(props, { }) {
                         return(
 
                                 <List.Accordion
+                                    key={d}
                                     style={styles.accordion}
                                     theme={{ colors: {background : '#fff' ,primary: '#25c53a'}}}
                                     title={<Text style={{fontSize: 22}}>{d.year  + "/" + d.month}</Text>}
@@ -92,10 +93,10 @@ export default function HistoryScreen(props, { }) {
                                         trainingInfo.map(function(dd){
                                             let check = dd.date.split("-");
                                            if(check[0] === d.year && check[1] === d.month) return (
-                                                <View style={{ backgroundColor: '#fff', flexDirection: 'row', borderWidth: 1, borderColor: '#a8a8a8', width: '98%', alignSelf: 'center', marginTop: 3, marginBottom: 3}}>
+                                                <View key={dd.id} style={{ backgroundColor: '#fff', flexDirection: 'row', borderWidth: 1, borderColor: '#a8a8a8', width: '98%', alignSelf: 'center', marginTop: 3, marginBottom: 3}}>
 
                                                     <View style={styles.trainingInfo}>
-                                                        <Text style={styles.summaryText2}>{t('activity')} {dd.activityType[0].title}</Text>
+                                                        <Text style={styles.summaryText2}>{t('activity')} {dd.activityType.title}</Text>
                                                         <Text style={styles.summaryText2}>{t('date')} {dd.date} : {dd.timeStarted}</Text>
                                                         <Text style={styles.summaryText2}>{t('timeElapsed')} {dd.time}</Text>
                                                         <Text style={styles.summaryText2}>{t('distance')} {dd.distance} km</Text>

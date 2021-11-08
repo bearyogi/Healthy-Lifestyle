@@ -52,5 +52,14 @@ export default StyleSheet.create({
     entityText: {
         fontSize: 20,
         color: '#333333'
-    }
+    },
+    formControl: {
+        width: '95%',
+        alignSelf: 'center',
+        marginTop: 15,
+        borderWidth: 2,
+        borderColor: 'rgba(21, 153, 40, .2)',
+        borderRadius: 20,
+        marginBottom: 15
+    },
 })
