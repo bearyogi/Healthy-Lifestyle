@@ -151,6 +151,7 @@ const resources = {
             "gpsTimeStarted" : "Time of start",
             "gpsEnterTimeStarted" : "Enter time of start",
             "categories" : "Categories",
+            "activityOverWeek" : "Activity over week:",
         }
     },
     fr: {
@@ -300,6 +301,7 @@ const resources = {
             "gpsTimeStarted" : "",
             "gpsEnterTimeStarted" : "",
             "categories" : "",
+            "activityOverWeek" : "",
         }
     },
     pl: {
@@ -448,7 +450,8 @@ const resources = {
             "gpsEnterTime" : "Wprowadź czas treningu",
             "gpsTimeStarted" : "Godzina rozpoczęcia",
             "gpsEnterTimeStarted" : "Wprowadź godzinę rozpoczęcia",
-            "categories" : "Kategorie"
+            "categories" : "Kategorie",
+            "activityOverWeek" : "Tygodniowa aktywność:",
         }
     }
 

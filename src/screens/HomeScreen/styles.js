@@ -62,7 +62,7 @@ export default StyleSheet.create({
     },
     dailyProgress: {
         backgroundColor: '#f5ffe3',
-        borderRadius: 5,
+        borderRadius: 11,
         borderWidth: 3,
         borderColor: '#b9e38f',
         padding: 15,
@@ -117,6 +117,14 @@ export default StyleSheet.create({
         marginBottom: 15,
         borderWidth: 3,
         borderColor: '#19b5a1',
+        borderRadius: 11
+    },
+    press5: {
+        width: '92%',
+        alignSelf: 'center',
+        marginBottom: 15,
+        borderWidth: 3,
+        borderColor: '#ffb975',
         borderRadius: 11
     },
     headingUser: {

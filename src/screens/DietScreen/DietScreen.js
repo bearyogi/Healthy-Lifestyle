@@ -116,7 +116,7 @@ export default function TrainingScreen(props) {
                                         <Stack mx={2}>
                                             <Text key={d.id} marginBottom={7} fontSize={"md"} textAlign={'justify'}>
                                                 {getLocale() === "pl" ? d.description : getLocale() === "fr" ? d.descriptionFr : d.descriptionEng}</Text>
-                                            <Text key={d.id} marginBottom={3} fontSize={"lg"} >{t('dietList')}</Text>
+                                            <Text  marginBottom={3} fontSize={"lg"} >{t('dietList')}</Text>
                                             {d.ingredients.length > 0 ? d.ingredients.map((dd) => (getLocale() === dd.language ? <Text key={dd.id} fontSize={"md"} style={{marginBottom: 15}}>● {dd.text}</Text> : <View key={dd.id}></View>)) : <View></View>}
 
                                         </Stack>

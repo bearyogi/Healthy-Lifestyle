@@ -68,37 +68,44 @@ export default function HomeScreen(props) {
             let lastDate = "1999-01-01".split("-")
             let lastTime = "00:00:00".split(":");
             querySnapshot.forEach((doc) => {
+                if(doc.data().userId === userID){
+
                 let inf = doc.data();
                 let date = inf.date.split("-");
                 let time = inf.timeStarted.split(":");
                 if(inf.userId === userID && dateYMD === inf.date){
                     calories = calories +  parseInt(inf.calories);
                     distance = distance + (inf.distance * 1000);
-                    steps = 0
+                    if(allValues.gender === 1 || allValues.gender === 0){
+                        steps = (distance * 10 / 8).toFixed(0);
+                    }else{
+                        steps = (distance * 10 / 6).toFixed(0);
+                    }
                 }
-                if(date[0] > lastDate[0]){
+
+                if(parseInt(date[0], 10) > parseInt(lastDate[0], 10)){
                     lastDate = date;
                     lastTime = time;
                 }
 
-                if(date[0] === lastDate[0]){
-                    if(date[1] > lastDate[1]){
+                if(parseInt(date[0], 10) === parseInt(lastDate[0], 10)){
+                    if(parseInt(date[1], 10) > parseInt(lastDate[1], 10)){
                         lastDate = date;
                         lastTime = time;
-                    } else if(date[1] === lastDate[1]){
-                        if(date[2] > lastDate[2]){
+                    } else if(parseInt(date[1], 10) === parseInt(lastDate[1], 10)){
+                        if(parseInt(date[2], 10) > parseInt(lastDate[2], 10)){
                             lastDate = date;
                             lastTime = time;
-                        }else if(date[2] === lastDate[2]){
-                            if(time[0] > lastTime[0]){
+                        }else if(parseInt(date[2], 10) === parseInt(lastDate[2], 10)){
+                            if(parseInt(time[0], 10) > parseInt(lastTime[0], 10)){
                                 lastDate = date;
                                 lastTime = time;
-                            }else if(time[0] === lastTime[0]){
-                                if(time[1] > lastTime[1]){
+                            }else if(parseInt(time[0], 10) === parseInt(lastTime[0], 10)){
+                                if(parseInt(time[1], 10) > parseInt(lastTime[1], 10)){
                                     lastDate = date;
                                     lastTime = time;
-                                } else if(time[1] === lastTime[1]){
-                                    if(time[2] > lastTime[2]){
+                                } else if(parseInt(time[1], 10) === parseInt(lastTime[1], 10)){
+                                    if(parseInt(time[2], 10) > parseInt(lastTime[2], 10)){
                                         lastDate = date;
                                         lastTime = time;
                                     }
@@ -107,7 +114,10 @@ export default function HomeScreen(props) {
                         }
                     }
                 }
-            })
+            }
+            }
+
+        )
             let tr = {};
             querySnapshot.forEach((doc) => {
                 let dd = doc.data();
@@ -163,7 +173,7 @@ export default function HomeScreen(props) {
                                 </Text>
                             </HStack>
                             {
-                                        <View style={{borderWidth: 1, borderColor: '#338cb5', marginTop: 10 , borderRadius: 10, padding: 5}}>
+                                        <View style={{borderWidth: 1, borderColor: '#338cb5', marginTop: 10 , borderRadius: 10, padding: 3}}>
                                             <View style={{ flexDirection: 'row',}}>
                                                 <Text fontSize={20} color="#000" fontWeight="medium">{t('lastTraining')}:</Text>
                                                 <Text fontSize={20} color="#000" fontWeight="medium"> {dailyActivityInfo.lastTraining.date}</Text>
@@ -179,7 +189,35 @@ export default function HomeScreen(props) {
 
                         </Box>
 
-                    </Pressable></View> : <View style={{backgroundColor: '#fff', marginBottom: '45%'} }>
+                    </Pressable>
+
+                        <Pressable
+                            onPress={() => props.navigation.push('History',{user})}
+                            style={styles.press5}
+                        >
+                            <Box p="5" rounded="8" bg="#ffe0c2">
+                                <HStack alignItems="flex-start">
+                                    <Text fontSize={23} color="#000" fontWeight="medium">
+                                        {t('activityOverWeek')}
+                                    </Text>
+                                </HStack>
+                                {
+                                    <View style={{borderWidth: 1, borderColor: '#338cb5', marginTop: 10 , borderRadius: 10, padding: 3}}>
+                                        <View style={{ flexDirection: 'row',}}>
+
+                                        </View>
+
+                                        <View style={{ marginTop: 10}}>
+
+                                        </View>
+                                    </View>
+                                }
+
+                            </Box>
+
+                        </Pressable>
+
+                    </View> : <View style={{backgroundColor: '#fff', marginBottom: '45%'} }>
                         <Pressable
                             onPress={() => props.navigation.push('Map',{user})}
                             style={styles.press1}>

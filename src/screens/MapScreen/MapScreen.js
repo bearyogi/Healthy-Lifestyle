@@ -368,8 +368,8 @@ class TrackCurrentUser extends Component{
                                     </View>
                             <Text style={styles.summaryText1}>{this.state.locale === 'pl' ? "Aktywność" : this.state.locale === 'fr' ? "TEMP" : "Activity"}: {this.state.locale === 'pl' ? this.state.choosenCategoryInfo.title : this.state.locale === 'fr' ? this.state.choosenCategoryInfo.titleFr : this.state.choosenCategoryInfo.titleEng}</Text>
                             <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Czas trwania" : this.state.locale === 'fr' ? "TEMP" : "Duration"}: {this.secondsToHms(this.state.timeActual-this.state.timeStarted)}</Text>
-                            <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Spalone kalorie" : this.state.locale === 'fr' ? "TEMP" : "Calories burned"}: {this.state.caloriesBurned.toPrecision(2)} </Text>
-                            <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Dystans" : this.state.locale === 'fr' ? "Distance" : "Distance"}: {this.state.distanceTravelled.toPrecision(2)} km</Text>
+                            <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Spalone kalorie" : this.state.locale === 'fr' ? "TEMP" : "Calories burned"}: {this.state.caloriesBurned.toFixed(0)} </Text>
+                            <Text style={styles.summaryText2}>{this.state.locale === 'pl' ? "Dystans" : this.state.locale === 'fr' ? "Distance" : "Distance"}: {this.state.distanceTravelled.toFixed(2)} km</Text>
                             <Text style={styles.summaryText3}>{this.state.locale === 'pl' ? "Dobra robota!" : this.state.locale === 'fr' ? "TEMP" : "Well done!"}</Text>
 
                             </View>
