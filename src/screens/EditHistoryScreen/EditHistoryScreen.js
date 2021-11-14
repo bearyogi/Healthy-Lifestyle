@@ -178,7 +178,7 @@ export default function EditHistoryScreen(props) {
                             placeholder= {t('gpsEnterCalories')}
                             keyboardType="numeric"
                             onChangeText={(any) => setAllValues({...allValues, ["calories"]: any})}
-                            value={allValues.calories}
+                            value={allValues.calories+""}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -202,7 +202,7 @@ export default function EditHistoryScreen(props) {
                             name="goalSteps"
                             placeholder= {t('gpsEnterDate')}
                             onChangeText={(any) => setAllValues({...allValues, ["date"]: any})}
-                            value={allValues.date}
+                            value={allValues.date+""}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -226,7 +226,7 @@ export default function EditHistoryScreen(props) {
                             name="goalSteps"
                             placeholder= {t('gpsEnterDistance')}
                             onChangeText={(any) => setAllValues({...allValues, ["distance"]: any})}
-                            value={allValues.distance}
+                            value={allValues.distance+""}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -250,7 +250,7 @@ export default function EditHistoryScreen(props) {
                             name="goalSteps"
                             placeholder= {t('gpsEnterTime')}
                             onChangeText={(any) => setAllValues({...allValues, ["time"]: any})}
-                            value={allValues.time}
+                            value={allValues.time+""}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
@@ -274,7 +274,7 @@ export default function EditHistoryScreen(props) {
                             name="goalSteps"
                             placeholder= {t('gpsEnterTimeStarted')}
                             onChangeText={(any) => setAllValues({...allValues, ["timeStarted"]: any})}
-                            value={allValues.timeStarted}
+                            value={allValues.timeStarted+""}
                             my={2}
                             _light={{
                                 placeholderTextColor: "blueGray.400",

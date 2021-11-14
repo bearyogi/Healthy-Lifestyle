@@ -35,6 +35,7 @@
     "react-cardstack": "^1.1.0",
     "react-circular-progressbar": "^2.0.4",
     "react-color": "^2.19.3",
+    "react-colorful": "^5.5.0",
     "react-dom": "16.13.1",
     "react-i18next": "^11.11.4",
     "react-native": "0.63.4",

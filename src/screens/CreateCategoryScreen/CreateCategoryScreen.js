@@ -6,7 +6,7 @@ import styles from './styles';
 import {useTranslation} from "react-i18next";
 import {NativeBaseProvider, extendTheme, FormControl, Input, Stack} from "native-base";
 
-export default function CreateCategoryScreen() {
+export default function CreateCategoryScreen(props) {
     const { t } = useTranslation();
     const [allValues, setAllValues] = useState({
         title: "",

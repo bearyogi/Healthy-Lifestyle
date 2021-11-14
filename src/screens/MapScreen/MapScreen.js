@@ -319,7 +319,8 @@ class TrackCurrentUser extends Component{
 
 
                             <Text style={styles.textTrainingCalories}>
-                                {parseFloat(this.state.caloriesBurned).toFixed(0)}
+                                {
+                                    parseFloat(this.state.caloriesBurned).toFixed(0) < 10 ? "00"+parseFloat(this.state.caloriesBurned).toFixed(0) : parseFloat(this.state.caloriesBurned).toFixed(0) < 100 ? "0"+parseFloat(this.state.caloriesBurned).toFixed(0) : parseFloat(this.state.caloriesBurned).toFixed(0)}
                             </Text>
                         </View>
 
@@ -329,7 +330,7 @@ class TrackCurrentUser extends Component{
                         </Text>
 
                             <Text style={styles.textTrainingSmallCalorie}>
-                             {this.state.locale === 'pl' ? "kalorie" : this.state.locale === 'fr' ? "calories": "calories"}
+                             {this.state.locale === 'pl' ? " kalorie" : this.state.locale === 'fr' ? " calories": " calories"}
                             </Text>
                     </View>
                     </View>}

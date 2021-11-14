@@ -1,0 +1,62 @@
+{
+  "color": [
+    {
+      "id": 0,
+      "text": "zielony",
+      "textEng": "green",
+      "textFr": "",
+      "value": "#49c240"
+    },
+
+    {
+      "id": 1,
+      "text": "niebieski",
+      "textEng": "blue",
+      "textFr": "",
+      "value": "#5c70d1"
+    },
+    {
+      "id": 2,
+      "text": "morski",
+      "textEng": "maritime",
+      "textFr": "",
+      "value": "#5cd1b0"
+    },
+
+    {
+      "id": 3,
+      "text": "czerwony",
+      "textEng": "red",
+      "textFr": "",
+      "value": "#e83a3a"
+    },
+    {
+      "id": 4,
+      "text": "pomarańczowy",
+      "textEng": "orange",
+      "textFr": "",
+      "value": "#db8637"
+    },
+
+    {
+      "id": 5,
+      "text": "żółty",
+      "textEng": "yellow",
+      "textFr": "",
+      "value": "#f0d13a"
+    },
+    {
+      "id": 6,
+      "text": "różowy",
+      "textEng": "pink",
+      "textFr": "",
+      "value": "#d44eb7"
+    },
+
+    {
+      "id": 7,
+      "text": "fioletowy",
+      "textEng": "purple",
+      "textFr": "",
+      "value": "#9a51cf"
+    }]}

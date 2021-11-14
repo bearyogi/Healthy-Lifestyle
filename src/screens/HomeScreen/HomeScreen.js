@@ -12,6 +12,16 @@ export default function HomeScreen(props) {
     const userID = props.route.params.user.id ? props.route.params.user.id : props.extraData.id;
     const { t } = useTranslation();
 
+    const [ticks, setTicks] = useState({
+        tick1 : "❔",
+        tick2 : "❔",
+        tick3 : "❔",
+        tick4 : "❔",
+        tick5 : "❔",
+        tick6 : "❔",
+        tick7 : "❔",
+
+    });
     const [greeting, setGreeting] = useState("GreetingsMorning")
     const [allValues, setAllValues] = useState({
         name: "",
@@ -50,21 +60,153 @@ export default function HomeScreen(props) {
         }
     }
 
+    function getDayName(cnt) {
+        const date = new Date();
+        let dayNum = date.getDay()-1;
+        if(cnt <= dayNum){
+            dayNum = dayNum - cnt;
+        }else{
+            dayNum = dayNum + (7 - cnt)
+        }
+        if(dayNum === 0){
+            return t('monday')
+        }else if(dayNum === 1){
+            return t('tuesday')
+        }else if(dayNum === 2){
+            return t('wednesday')
+        }else if(dayNum === 3){
+            return t('thursday')
+        }else if(dayNum === 4){
+            return t('friday')
+        }else if(dayNum === 5){
+            return t('saturday')
+        }else if(dayNum === 6){
+            return t('sunday')
+        }
+        return null;
+    }
+
     useEffect(() => {
         getData().then(Promise.resolve);
+        getTickData().then(Promise.resolve);
         pickGreeting();
 
     },[] )
 
+
+    const getTickData = async () => {
+        let date = new Date();
+        let date1 = new Date();
+        let date2 = new Date();
+        let date3 = new Date();
+        let date4 = new Date();
+        let date5 = new Date();
+        let date6 = new Date();
+        let date7 = new Date();
+        date1.setDate(date.getDate());
+        date2.setDate(date.getDate() - 1);
+        date3.setDate(date.getDate() - 2);
+        date4.setDate(date.getDate() - 3);
+        date5.setDate(date.getDate() - 4);
+        date6.setDate(date.getDate() - 5);
+        date7.setDate(date.getDate() - 6);
+        date1 = date1.getFullYear() + "-" + (date1.getMonth() + 1)+ "-" + date1.getDate();
+        date2 = date2.getFullYear() + "-" + (date2.getMonth() + 1)+ "-" + date2.getDate();
+        date3 = date3.getFullYear() + "-" + (date3.getMonth() + 1)+ "-" + date3.getDate();
+        date4 = date4.getFullYear() + "-" + (date4.getMonth() + 1)+ "-" + date4.getDate();
+        date5 = date5.getFullYear() + "-" + (date5.getMonth() + 1)+ "-" + date5.getDate();
+        date6 = date6.getFullYear() + "-" + (date6.getMonth() + 1)+ "-" + date6.getDate();
+        date7 = date7.getFullYear() + "-" + (date7.getMonth() + 1)+ "-" + date7.getDate();
+
+        let tick1 = "❔"
+        let tick2 = "❔"
+        let tick3 = "❔"
+        let tick4 = "❔"
+        let tick5 = "❔"
+        let tick6 = "❔"
+        let tick7 = "❔"
+
+        const snap2 =  firebase.firestore().collection('userDailyTrainingData');
+        snap2.get().then(async (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                    if (doc.data().userId === props.route.params.user.id) {
+
+                        let calories = parseInt(doc.data().calories);
+                        let distance = parseInt(doc.data().distance);
+                        let steps = parseInt(doc.data().steps);
+                        let goalCalories = parseInt(doc.data().actualGoalCalories);
+                        let goalDistance = parseInt(doc.data().actualGoalDistance);
+                        let goalSteps = parseInt(doc.data().actualGoalSteps);
+
+                        if(doc.data().date === date1 && calories >= goalCalories && distance >= goalDistance && steps >= goalSteps){
+                            tick1 = "✔"
+                        }else if(doc.data().date === date1){
+                            tick1 = "❌"
+                        }
+
+                        if(doc.data().date === date2 && calories >= goalCalories && distance >= goalDistance && steps >= goalSteps){
+                            tick2 = "✔"
+                        }else if(doc.data().date === date2){
+                            tick2 = "❌"
+                        }
+
+                        if(doc.data().date === date3 && calories >= goalCalories && distance >= goalDistance && steps >= goalSteps){
+                            tick3 = "✔"
+                        }else if(doc.data().date === date3){
+                            tick3 = "❌"
+                        }
+
+                        if(doc.data().date === date4 && calories >= goalCalories && distance >= goalDistance && steps >= goalSteps){
+                            tick4 = "✔"
+                        }else if(doc.data().date === date4){
+                            tick4 = "❌"
+                        }
+
+                        if(doc.data().date === date5 && calories >= goalCalories && distance >= goalDistance && steps >= goalSteps){
+                            tick5 = "✔"
+                        }else if(doc.data().date === date5){
+                            tick5 = "❌"
+                        }
+
+                        if(doc.data().date === date6 && calories >= goalCalories && distance >= goalDistance && steps >= goalSteps){
+                            tick6 = "✔"
+                        }else if(doc.data().date === date6){
+                            tick6 = "❌"
+                        }
+
+                        if(doc.data().date === date7 && calories >= goalCalories && distance >= goalDistance && steps >= goalSteps){
+                            tick7 = "✔"
+                        }else if(doc.data().date === date7){
+                            tick7 = "❌"
+                        }
+
+
+                    }
+                }
+            )
+        setTicks({
+            tick1 : tick1,
+            tick2 : tick2,
+            tick3 : tick3,
+            tick4 : tick4,
+            tick5 : tick5,
+            tick6 : tick6,
+            tick7 : tick7,
+        })
+        })
+    }
+
     const getData = async () => {
+        let calories = 0;
+        let steps = 0;
+        let distance = 0;
         const date = new Date();
         const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1)+ "-" + date.getDate();
-        await firebase.firestore().collection('userPersonalData').doc(userID).get().then(snapshot => setAllValues(snapshot.data()));
-        const snap = firebase.firestore().collection('gpsTrainingInfo');
+        const userDataObj = await firebase.firestore().collection('userPersonalData').doc(userID).get()
+        setAllValues(userDataObj.data())
+        const snap = await firebase.firestore().collection('gpsTrainingInfo');
         snap.get().then((querySnapshot) => {
-            let calories = 0;
-            let steps = 0;
-            let distance = 0;
+
             let lastDate = "1999-01-01".split("-")
             let lastTime = "00:00:00".split(":");
             querySnapshot.forEach((doc) => {
@@ -76,10 +218,14 @@ export default function HomeScreen(props) {
                 if(inf.userId === userID && dateYMD === inf.date){
                     calories = calories +  parseInt(inf.calories);
                     distance = distance + (inf.distance * 1000);
-                    if(allValues.gender === 1 || allValues.gender === 0){
-                        steps = (distance * 10 / 8).toFixed(0);
+                    if(userDataObj.data().gender === '1' || userDataObj.data().gender === '0'){
+                        let stepLengthMeters = (parseInt(userDataObj.data().height) * 0.415).toFixed(2) / 100;
+                        steps = (distance / stepLengthMeters).toFixed(0);
+
                     }else{
-                        steps = (distance * 10 / 6).toFixed(0);
+                        let stepLengthMeters = (parseInt(userDataObj.data().height) * 0.413).toFixed(2) * 100;
+                        steps = (distance / stepLengthMeters).toFixed(0);
+
                     }
                 }
 
@@ -134,8 +280,26 @@ export default function HomeScreen(props) {
                 steps: steps,
                 lastTraining: tr
             }
+
             setDailyActivityInfo(tempDoc);
+
+            let id;
+            const snap2 = firebase.firestore().collection('userDailyTrainingData');
+            snap2.get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if(doc.data().userId === props.route.params.user.id && doc.data().date === dateYMD){
+                        id = doc.id;
+                        firebase.firestore().collection('userDailyTrainingData').doc(id).update({
+                            distance: distance,
+                            calories: calories,
+                            steps: steps
+                        })
+                    }}
+                )
+
+            })
         })
+
     }
 
     return (
@@ -166,14 +330,14 @@ export default function HomeScreen(props) {
                         onPress={() => props.navigation.push('History',{user})}
                         style={styles.press}
                     >
-                        <Box p="5" rounded="8" bg="#8ccdff">
+                        <Box p="5" rounded="8" bg="#d9ffcf">
                             <HStack alignItems="flex-start">
                                 <Text fontSize={23} color="#000" fontWeight="medium">
                                     {t('trainingHistory')} &#10140;
                                 </Text>
                             </HStack>
                             {
-                                        <View style={{borderWidth: 1, borderColor: '#338cb5', marginTop: 10 , borderRadius: 10, padding: 3}}>
+                                        <View style={{borderWidth: 1, borderColor: '#4ca649', marginTop: 10 , borderRadius: 10, padding: 3}}>
                                             <View style={{ flexDirection: 'row',}}>
                                                 <Text fontSize={20} color="#000" fontWeight="medium">{t('lastTraining')}:</Text>
                                                 <Text fontSize={20} color="#000" fontWeight="medium"> {dailyActivityInfo.lastTraining.date}</Text>
@@ -191,19 +355,35 @@ export default function HomeScreen(props) {
 
                     </Pressable>
 
-                        <Pressable
-                            onPress={() => props.navigation.push('History',{user})}
-                            style={styles.press5}
-                        >
-                            <Box p="5" rounded="8" bg="#ffe0c2">
-                                <HStack alignItems="flex-start">
+                        <Pressable style={styles.press5}>
+                            <Box p="5" rounded="8" bg="#fffbc2">
+                                <HStack alignItems="flex-start" style={{height: 50}}>
                                     <Text fontSize={23} color="#000" fontWeight="medium">
                                         {t('activityOverWeek')}
                                     </Text>
                                 </HStack>
                                 {
-                                    <View style={{borderWidth: 1, borderColor: '#338cb5', marginTop: 10 , borderRadius: 10, padding: 3}}>
+                                    <View style={{ marginTop: 10 , borderRadius: 10, padding: 3}}>
+
                                         <View style={{ flexDirection: 'row',}}>
+                                            <Text style={styles.tickText}>{ticks.tick7}</Text>
+                                            <Text style={styles.tickText}>{ticks.tick6}</Text>
+                                            <Text style={styles.tickText}>{ticks.tick5}</Text>
+                                            <Text style={styles.tickText}>{ticks.tick4}</Text>
+                                            <Text style={styles.tickText}>{ticks.tick3}</Text>
+                                            <Text style={styles.tickText}>{ticks.tick2}</Text>
+                                            <Text style={styles.tickText}>{ticks.tick1}</Text>
+
+                                        </View>
+
+                                        <View style={{ flexDirection: 'row',}}>
+                                            <Text style={styles.weekText}>{getDayName(6)}</Text>
+                                            <Text style={styles.weekText}>{getDayName(5)}</Text>
+                                            <Text style={styles.weekText}>{getDayName(4)}</Text>
+                                            <Text style={styles.weekText}>{getDayName(3)}</Text>
+                                            <Text style={styles.weekText}>{getDayName(2)}</Text>
+                                            <Text style={styles.weekText}>{getDayName(1)}</Text>
+                                            <Text style={styles.weekText}>{getDayName(0)}</Text>
 
                                         </View>
 

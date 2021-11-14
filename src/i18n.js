@@ -151,7 +151,15 @@ const resources = {
             "gpsTimeStarted" : "Time of start",
             "gpsEnterTimeStarted" : "Enter time of start",
             "categories" : "Categories",
-            "activityOverWeek" : "Activity over week:",
+            "activityOverWeek" : "Training goals over week:",
+            "monday" : "Mon",
+            "tuesday" : "Tue",
+            "wednesday" : "Wed",
+            "thursday" : "Thu",
+            "friday" : "Fri",
+            "saturday" : "Sat",
+            "sunday" : "Sun",
+
         }
     },
     fr: {
@@ -302,6 +310,13 @@ const resources = {
             "gpsEnterTimeStarted" : "",
             "categories" : "",
             "activityOverWeek" : "",
+            "monday" : "",
+            "tuesday" : "",
+            "wednesday" : "",
+            "thursday" : "",
+            "friday" : "",
+            "saturday" : "",
+            "sunday" : "",
         }
     },
     pl: {
@@ -451,7 +466,14 @@ const resources = {
             "gpsTimeStarted" : "Godzina rozpoczęcia",
             "gpsEnterTimeStarted" : "Wprowadź godzinę rozpoczęcia",
             "categories" : "Kategorie",
-            "activityOverWeek" : "Tygodniowa aktywność:",
+            "activityOverWeek" : "Tygodniowe cele treningowe:",
+            "monday" : "Pon",
+            "tuesday" : "Wt",
+            "wednesday" : "Śr",
+            "thursday" : "Czw",
+            "friday" : "Pt",
+            "saturday" : "Sob",
+            "sunday" : "Nd",
         }
     }
 

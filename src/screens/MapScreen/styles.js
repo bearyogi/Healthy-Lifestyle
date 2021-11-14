@@ -131,7 +131,7 @@ export default StyleSheet.create({
 
     textTrainingCalories: {
         marginTop: 25,
-        marginLeft: '14%',
+        marginLeft: '10%',
         textAlign: "right",
         fontSize: 30,
         fontWeight: 'bold',

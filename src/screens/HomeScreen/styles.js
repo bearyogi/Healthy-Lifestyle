@@ -79,7 +79,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 15,
         borderWidth: 3,
-        borderColor: '#3a7ef2',
+        borderColor: '#4ca649',
         borderRadius: 11
     },
     press1: {
@@ -124,7 +124,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 15,
         borderWidth: 3,
-        borderColor: '#ffb975',
+        borderColor: '#e0cc65',
         borderRadius: 11
     },
     headingUser: {
@@ -134,6 +134,16 @@ export default StyleSheet.create({
         width: '90%',
         alignSelf : 'center',
         borderBottomColor: '#000'
+    },
+    weekText: {
+        fontSize: 22,
+        marginRight: 15
+    },
+    tickText: {
+        color: '#32a852',
+        fontSize: 19,
+        marginRight: 23,
+        marginBottom: 13
     }
 
 })

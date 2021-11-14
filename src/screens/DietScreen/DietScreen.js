@@ -30,6 +30,7 @@ export default function TrainingScreen(props) {
             const tempDoc = []
             const tempInfo = []
             querySnapshot.forEach((doc) => {
+                console.log("0")
                 tempDoc.push({ id: doc.id, ...doc.data() })
                 tempInfo.push({id: doc.id, val: false})
             })
@@ -82,10 +83,10 @@ export default function TrainingScreen(props) {
             {
                 backgroundColor: color,
                 borderRadius: 15,
-                height: 140,
+                height: 100,
                 padding: 17,
-                paddingTop: 37,
-                margin: 10,
+                paddingTop: 22,
+                margin: 4,
                 borderWidth: 2,
                 borderColor: '#bdbdbd'
             })}

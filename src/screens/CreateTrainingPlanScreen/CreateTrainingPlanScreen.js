@@ -4,13 +4,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { firebase } from '../../firebase/config'
 import styles from './styles';
 import {useTranslation} from "react-i18next";
-import {NativeBaseProvider, extendTheme, FormControl, Input, Stack} from "native-base";
-import ColorPicker from "react-native-wheel-color-picker";
+import {NativeBaseProvider, extendTheme, FormControl, Input, Stack, Select, CheckIcon} from "native-base";
+import colors from "../../utils/colors.json";
 
-export default function CreateTrainingPlanScreen() {
+export default function CreateTrainingPlanScreen(props) {
     const { t } = useTranslation();
+    const colorsList = colors;
     const [allValues, setAllValues] = useState({
-        color: "#fff",
+        color: colorsList.color[0].value,
         dateOfAdding: "",
         description: "",
         descriptionEng: "",
@@ -54,7 +55,7 @@ export default function CreateTrainingPlanScreen() {
         let year = dateObj.getUTCFullYear();
 
         const dateFinal = year + "-" + month + "-" + day;
-        if (allValues.name !== "" && allValues.nameEng !== "" && allValues.nameFr !== "" && allValues.exercises.length !== 0
+        if (allValues.name !== "" && allValues.nameEng !== "" && allValues.nameFr !== ""
             && allValues.description !== "" && allValues.descriptionEng !== "" && allValues.descriptionFr && allValues.color !== "" && checkExercises() === 0) {
             let id = 0;
             const snapshot = firebase.firestore().collection('trainingPlans');
@@ -252,45 +253,43 @@ export default function CreateTrainingPlanScreen() {
                     </Stack>
 
                 </FormControl>
+
                 <FormControl style = {styles.formControl} isRequired backgroundColor={'#fff'} isInvalid={!(allValues.color)}>
                     <Stack mx={2}>
                         <FormControl.Label>{t('trainingPlanColor')}:</FormControl.Label>
-                        <Input
-                            fontSize={'md'}
-                            name="goalSteps"
-                            placeholder= {t('trainingPlanEnterColor')}
-                            onChangeText={(any) => setAllValues({...allValues, ["color"]: any})}
-                            value={allValues.color}
-                            my={2}
+                        <FormControl.ErrorMessage my={2}>
+                            {t('emptyFieldWarning')}
+                        </FormControl.ErrorMessage>
+                        <View style={{height: 50, backgroundColor: allValues.color, borderRadius: 7, marginBottom: 10}}></View>
+                        <Select
+
+                            minWidth={200}
+                            placeholder= {t('trainingPlanColor')}
+                            selectedValue={allValues.color}
+                            onValueChange={(any) => setAllValues({...allValues, ["color"]: any})}
+                            _selectedItem={{
+                                bg: "cyan.600",
+                                endIcon: <CheckIcon size={4} />,
+                            }}
                             _light={{
                                 placeholderTextColor: "blueGray.400",
                             }}
                             _dark={{
                                 placeholderTextColor: "blueGray.50",
                             }}
-                        />
-                        <FormControl.ErrorMessage my={2}>
-                            {t('emptyFieldWarning')}
-                        </FormControl.ErrorMessage>
+                        >
+                            {colorsList.color.map(function(d){
+                                const text = t('startButton') === "Commencer" ? d.textFr : t('startButton') === "Start" ? d.textEng : d.text;
+                                return(
+                                    <Select.Item style={{color: d.value}} key={d.id} label={text} value={d.value} />
+                                )
+                            })}
+
+                        </Select>
+                        <View style={{height: 10}}></View>
                     </Stack>
 
                 </FormControl>
-
-                <View style={styles.hexColor}>
-                    <ColorPicker
-
-                        color={'rgb(21, 153, 40)'}
-                        swatchesOnly={0}
-                        onColorChange={(any) => setAllValues({...allValues, ["color"]: any})}
-                        thumbSize={40}
-                        sliderSize={30}
-                        noSnap={true}
-                        row={false}
-                        swatchesLast={0}
-                        swatches={0}
-                        discrete={0}
-                        autoResetSlider onColorChangeComplete={(any) => setAllValues({...allValues, ["color"]: any})} shadeSliderThumb shadeWheelThumb/>
-                </View>
 
                 <TouchableOpacity
                     style={styles.button}
