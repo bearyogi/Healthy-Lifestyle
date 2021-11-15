@@ -159,7 +159,7 @@ const resources = {
             "friday" : "Fri",
             "saturday" : "Sat",
             "sunday" : "Sun",
-
+            "usersHistoryUserName" : "Enter user credensials:",
         }
     },
     fr: {
@@ -317,6 +317,7 @@ const resources = {
             "friday" : "",
             "saturday" : "",
             "sunday" : "",
+            "usersHistoryUserName" : "",
         }
     },
     pl: {
@@ -474,6 +475,7 @@ const resources = {
             "friday" : "Pt",
             "saturday" : "Sob",
             "sunday" : "Nd",
+            "usersHistoryUserName" : "Wprowadź nazwę użytkownika:",
         }
     }
 

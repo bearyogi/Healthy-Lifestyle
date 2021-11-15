@@ -60,7 +60,8 @@ export default function App() {
     return (
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator  screenOptions={{
-                headerShown: false
+                headerShown: false,
+                swipeEdgeWidth: 0
             }}>
                     <>
                         <Stack.Screen name="Login" component={LoginScreen}/>

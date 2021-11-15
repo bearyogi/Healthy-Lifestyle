@@ -3,13 +3,14 @@ import {Text, View} from 'react-native'
 import {firebase} from '../../firebase/config'
 import styles from './styles';
 import {useTranslation} from "react-i18next";
-import {Button, Heading, NativeBaseProvider, ScrollView} from "native-base";
+import {Button, Heading, Input, NativeBaseProvider, ScrollView} from "native-base";
 import {List} from "react-native-paper";
 import Footer from "../../utils/Footer";
 
 export default function EditUsersHistoryScreen(props) {
 
     const { t } = useTranslation();
+    const [search, setSearch] = useState("");
     const [trainingInfo, setTrainingInfo] = useState([]);
     const [expandInfo, setExpandInfo] = useState([]);
     const [date, setDate] = useState([{
@@ -27,6 +28,22 @@ export default function EditUsersHistoryScreen(props) {
             const tempDate = []
             const tempExpand = []
             querySnapshot.forEach((doc) => {
+                if(search !== ""){
+                    if(doc.data().userCredensials.includes(search)){
+                        let tempDateDoc = doc.data().date.split("-");
+                        let dataIndicator = false;
+                        tempDate.forEach(dataCollection => {
+                            if(dataCollection.year === tempDateDoc[0] && dataCollection.month === tempDateDoc[1]){
+                                dataIndicator = true;
+                            }
+                        })
+                        if(!dataIndicator){
+                            tempExpand.push({id: tempDateDoc[0] + tempDateDoc[1], val: false})
+                            tempDate.push({year: tempDateDoc[0], month: tempDateDoc[1]})
+                        }
+                        tempInfo.push({id: doc.id, ...doc.data()})
+                    }
+                }else{
                     let tempDateDoc = doc.data().date.split("-");
                     let dataIndicator = false;
                     tempDate.forEach(dataCollection => {
@@ -39,6 +56,7 @@ export default function EditUsersHistoryScreen(props) {
                         tempDate.push({year: tempDateDoc[0], month: tempDateDoc[1]})
                     }
                     tempInfo.push({id: doc.id, ...doc.data()})
+                }
             })
             setExpandInfo(tempExpand)
             setDate(tempDate);
@@ -83,6 +101,25 @@ export default function EditUsersHistoryScreen(props) {
                     <View style={styles.historyHeading}>
                         <Heading>{t('historyHeading')}</Heading>
                     </View>
+                    <View style={{ flexDirection: 'row', backgroundColor: '#fff', borderColor: '#3ebd51', borderRadius: 10, borderWidth: 2, marginLeft: 2, marginRight: 2}}>
+                        <Input
+                            style={{marginLeft: 15, width: '75%'}}
+                            fontSize={'md'}
+                            name="goalSteps"
+                            placeholder= {t('usersHistoryUserName')}
+                            onChangeText={(any) => setSearch(any)}
+                            value={search}
+                            my={2}
+                            _light={{
+                                placeholderTextColor: "blueGray.400",
+                            }}
+                            _dark={{
+                                placeholderTextColor: "blueGray.50",
+                            }}
+                        />
+                        <Button style={{height: 45, width: 45, borderRadius: 30, marginTop: 10, marginLeft: 20, backgroundColor: '#3ebd51' }} onPress={() => getData()}> ➤</Button>
+                    </View>
+
                     <List.Section>
                         {
                             date.map(function(d){

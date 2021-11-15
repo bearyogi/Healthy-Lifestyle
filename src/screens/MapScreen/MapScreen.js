@@ -85,10 +85,10 @@ class TrackCurrentUser extends Component{
             this.setState({trainingCategoryInfo: tempDoc})
         })
 
-        const snap = await firebase.firestore().collection('users');
+        const snap = await firebase.firestore().collection('userPersonalData');
         snap.get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                if (doc.data().id === this.props.route.params.user.id) {
+                if (doc.data().userId === this.props.route.params.user.id) {
                     this.setState({userCred: doc.data().name + " " + doc.data().surname})
                 }
             })

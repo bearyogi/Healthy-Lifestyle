@@ -389,28 +389,32 @@ export default function ProfileScreen(props) {
                             </List.Accordion>
                         </List.Section>
 
-                        <Center>
+                        <View style={{ flexDirection: 'row', backgroundColor: '#fff'}}>
                             <Button
-                                onPress={onUpdateButton}
-                                width={'50%'}
-                                height={60}
+                                marginLeft={5}
+                                marginRight={'10%'}
+                                marginTop={7}
                                 marginBottom={10}
-                                marginTop={10}
+                                onPress={onUpdateButton}
+                                width={'40%'}
+                                height={60}
                                 backgroundColor={'green.400'}
                             >
                                 {t('updateButton')}
                             </Button>
 
                             <Button
+                                marginTop={7}
+                                marginBottom={10}
                                 onPress={onLogOutButton}
-                                width={'50%'}
+                                width={'40%'}
                                 height={60}
                                 backgroundColor={'orange.400'}
                             >
                                 {t('logOutButton')}
                             </Button>
+                        </View>
 
-                        </Center>
                     </ScrollView>
                     <Footer choice={4} user={props.route.params.user} navigation={props.navigation}/>
                 </View>
