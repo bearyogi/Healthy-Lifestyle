@@ -17,23 +17,23 @@ One can also use it to look for new diet and training plans.
 
 ## Screenshots
 <p align="left">
-  <img src="./img/img1.jpg" height="600" width="250" alt="Img1">
-  <img src="./img/img2.jpg" height="600" width="250" alt="Img2">
-  <img src="./img/img3.jpg" height="600" width="250" alt="Img3">
-  <img src="./img/img4.jpg" height="600" width="250" alt="Img4">
-  <img src="./img/img6.jpg" height="600" width="250" alt="Img6">
-  <img src="./img/img7.jpg" height="600" width="250" alt="Img7">
-  <img src="./img/img8.jpg" height="600" width="250" alt="Img8">
-  <img src="./img/img9.jpg" height="600" width="250" alt="Img9">
-  <img src="./img/img10.jpg" height="600" width="250" alt="Img10">
-  <img src="./img/img11.jpg" height="600" width="250" alt="Img11">
-  <img src="./img/img12.jpg" height="600" width="250" alt="Img12">
-  <img src="./img/img13.jpg" height="600" width="250" alt="Img13">
-  <img src="./img/img14.jpg" height="600" width="250" alt="Img14">
-  <img src="./img/img15.jpg" height="600" width="250" alt="Img15">
-  <img src="./img/img16.jpg" height="600" width="250" alt="Img16">
-  <img src="./img/img17.jpg" height="600" width="250" alt="Img17">
-  <img src="./img/img18.jpg" height="600" width="250" alt="Img18">
+  <img src="./img/img1.jpg" height="570" width="250" alt="Img1">
+  <img src="./img/img2.jpg" height="570" width="250" alt="Img2">
+  <img src="./img/img3.jpg" height="570" width="250" alt="Img3">
+  <img src="./img/img4.jpg" height="570" width="250" alt="Img4">
+  <img src="./img/img6.jpg" height="570" width="250" alt="Img6">
+  <img src="./img/img7.jpg" height="570" width="250" alt="Img7">
+  <img src="./img/img8.jpg" height="570" width="250" alt="Img8">
+  <img src="./img/img9.jpg" height="570" width="250" alt="Img9">
+  <img src="./img/img10.jpg" height="570" width="250" alt="Img10">
+  <img src="./img/img11.jpg" height="570" width="250" alt="Img11">
+  <img src="./img/img12.jpg" height="570" width="250" alt="Img12">
+  <img src="./img/img13.jpg" height="570" width="250" alt="Img13">
+  <img src="./img/img14.jpg" height="570" width="250" alt="Img14">
+  <img src="./img/img15.jpg" height="570" width="250" alt="Img15">
+  <img src="./img/img16.jpg" height="570" width="250" alt="Img16">
+  <img src="./img/img17.jpg" height="570" width="250" alt="Img17">
+  <img src="./img/img18.jpg" height="570" width="250" alt="Img18">
 </p>
 
 ## Techstack:
