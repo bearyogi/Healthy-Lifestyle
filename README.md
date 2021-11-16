@@ -50,14 +50,20 @@ One can also use it to look for new diet and training plans.
 * register and login
 * change user data
 * dark/light theme
+* multi language support
 * attractive and simple design
 * make trainings
 * GPS tracking
 * view diet and training plans
 * see history of trainings
+* track weekly goals
+* track weight change
 
 ## Configuration
-!!TO BE DONE!!
+Download project and extract to your directory
+Load project into your IDE like Intelij or Webstorm
+Install NPM and Expo
+Run on Expo Go application
 
 ## Status
 This application is under construction.
