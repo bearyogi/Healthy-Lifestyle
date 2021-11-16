@@ -3,9 +3,35 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import {AntDesign, FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import {useTranslation} from "react-i18next";
 import React from "react";
+import {firebase} from "../firebase/config";
  function Footer(props){
     const [selected, setSelected] = React.useState(props.choice);
     const { t } = useTranslation();
+
+    const route = (text) => {
+        setFirstLogon().then(Promise.resolve)
+        const user = props.user;
+        props.navigation.push(text, {user});
+    }
+
+     const setFirstLogon = async () => {
+         const date = new Date();
+         const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1)+ "-" + date.getDate();
+         let id;
+         const snap2 = firebase.firestore().collection('userDailyTrainingData');
+         snap2.get().then((querySnapshot) => {
+             querySnapshot.forEach((doc) => {
+                 if(doc.data().userId === props.user.id && doc.data().date === dateYMD){
+                     id = doc.id;
+                     firebase.firestore().collection('userDailyTrainingData').doc(id).update({
+                         firstLogon: 0
+                     })
+                 }}
+             )
+
+         })
+     }
+
     return(
         <Box justifyContent="space-between" height="50" marginBottom="1" bg="white" >
             <Center flex={1}>
@@ -19,8 +45,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(0);
-                        const user = props.user;
-                        props.navigation.push('Home', {user});
+                        route('Home')
                     }}
                 >
                     <Center>
@@ -41,8 +66,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(1)
-                        const user = props.user;
-                        props.navigation.push('Map', {user});
+                        route('Map')
                     }}
                 >
                     <Center>
@@ -63,8 +87,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(2)
-                        const user = props.user;
-                        props.navigation.push('Training', {user});
+                        route('Training')
                     }}
                 >
                     <Center>
@@ -85,8 +108,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(3)
-                        const user = props.user;
-                        props.navigation.push('Diet', {user});
+                        route('Diet')
                     }}
                 >
                     <Center>
@@ -106,8 +128,7 @@ import React from "react";
                     flex={1}
                     onPress={() => {
                         setSelected(4)
-                        const user = props.user;
-                        props.navigation.push('Profile', {user});
+                        route('Profile')
                     }}
                 >
                     <Center>

@@ -160,6 +160,10 @@ const resources = {
             "saturday" : "Sat",
             "sunday" : "Sun",
             "usersHistoryUserName" : "Enter user credensials:",
+            "weightOverWeek" : "Mody mass weekly change:",
+            "firstLogonAlert" : "We noticed this is your first login today.",
+            "goToOptions" : "Go to profile tab",
+            "noticeWeight" : "Don't forget to change and adjust your daily goals and body measures.",
         }
     },
     fr: {
@@ -318,6 +322,10 @@ const resources = {
             "saturday" : "",
             "sunday" : "",
             "usersHistoryUserName" : "",
+            "weightOverWeek" : "",
+            "firstLogonAlert" : "",
+            "goToOptions" : "",
+            "noticeWeight" : "",
         }
     },
     pl: {
@@ -476,6 +484,10 @@ const resources = {
             "saturday" : "Sob",
             "sunday" : "Nd",
             "usersHistoryUserName" : "Wprowadź nazwę użytkownika:",
+            "weightOverWeek" : "Tygodniowa masa ciała:",
+            "firstLogonAlert" : "Zauważyliśmy, że jest to twoje pierwsze dzisiejsze logowanie.",
+            "goToOptions" : "Idź do menu profilu",
+            "noticeWeight" : "Nie zapomnij dostosować swoich dziennych celi oraz pomiarów swojego ciała.",
         }
     }
 

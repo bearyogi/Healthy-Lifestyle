@@ -127,6 +127,14 @@ export default StyleSheet.create({
         borderColor: '#e0cc65',
         borderRadius: 11
     },
+    press7: {
+        width: '92%',
+        alignSelf: 'center',
+        marginBottom: 15,
+        borderWidth: 3,
+        borderColor: '#68f2ca',
+        borderRadius: 11
+    },
     headingUser: {
         borderBottomWidth: 4,
         borderBottomLeftRadius: 15,
@@ -137,13 +145,47 @@ export default StyleSheet.create({
     },
     weekText: {
         fontSize: 22,
-        marginRight: 15
+        marginRight: '5%'
+    },
+    weekTextEng: {
+        fontSize: 22,
+        marginRight: '3%'
     },
     tickText: {
         color: '#32a852',
         fontSize: 19,
-        marginRight: 23,
+        marginRight: '7.5%',
         marginBottom: 13
+    },
+    weightText: {
+        color: '#5c5c5c',
+        fontWeight: 'bold',
+        fontSize: 22,
+        marginRight: '11.2%',
+        marginBottom: 13
+    },
+    weightTextDouble: {
+        color: '#5c5c5c',
+        fontWeight: 'bold',
+        fontSize: 22,
+        marginRight: '7%',
+        marginBottom: 13
+    },
+    modalTitle: {
+        marginTop: 30,
+        fontSize: 22,
+        color: '#1a1a1a',
+        padding: 5,
+    },
+    modalButton: {
+        fontSize: 20,
+        color: '#fff',
+    },
+    modalText: {
+        fontSize: 20,
+        color: '#1a1a1a',
+        marginBottom: 30,
+        marginTop: 10
     }
 
 })

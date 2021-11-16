@@ -30,7 +30,7 @@ export default function LoginScreen({navigation}) {
                             return;
                         }
                         const user = firestoreDocument.data()
-                       createDailyTrainingData(user.id).then(navigation.push('Home',{user}));
+                       createDailyTrainingData(user).then();
 
                     })
                     .catch(error => {
@@ -42,18 +42,18 @@ export default function LoginScreen({navigation}) {
             })
     }
 
-    const createDailyTrainingData = async (userID) => {
+    const createDailyTrainingData = async (user) => {
         const date = new Date();
         let id = 0;
         const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1)+ "-" + date.getDate();
 
-        const objD = await firebase.firestore().collection('userPersonalData').doc(userID).get()
+        const objD = await firebase.firestore().collection('userPersonalData').doc(user.id).get()
 
         const snap = await firebase.firestore().collection('userDailyTrainingData');
         snap.get().then(async (querySnapshot) => {
             let check = true;
             querySnapshot.forEach((doc) => {
-                    if (doc.data().userId === userID && doc.data().date === dateYMD) {
+                    if (doc.data().userId === user.id && doc.data().date === dateYMD) {
                         check = false;
                     }
                     if (doc.data().id >= id) {
@@ -71,11 +71,14 @@ export default function LoginScreen({navigation}) {
                     distance: 0,
                     steps: 0,
                     id: id,
-                    userId: userID,
-                    date: dateYMD
+                    userId: user.id,
+                    date: dateYMD,
+                    weight: objD.data().weight,
+                    firstLogon: 1
                 }
                 await firebase.firestore().collection('userDailyTrainingData').add(obj);
             }
+            navigation.push('Home',{user})
         })
     }
 

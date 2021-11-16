@@ -4,7 +4,7 @@ import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import { List } from 'react-native-paper';
 import {
     Button,
-    Center, CheckIcon,
+    CheckIcon,
     FormControl,
     Input,
     ScrollView, Select,
@@ -71,7 +71,8 @@ export default function ProfileScreen(props) {
                     firebase.firestore().collection('userDailyTrainingData').doc(id).update({
                         actualGoalCalories: allValues.dailyGoalCalories,
                         actualGoalDistance: allValues.dailyGoalDistance,
-                        actualGoalSteps: allValues.dailyGoalSteps
+                        actualGoalSteps: allValues.dailyGoalSteps,
+                        weight: allValues.weight
                     })
                 }}
             )

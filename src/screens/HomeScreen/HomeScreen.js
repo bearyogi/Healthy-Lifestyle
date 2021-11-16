@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { firebase } from '../../firebase/config'
 import {useTranslation} from "react-i18next";
-import {Box, Heading, HStack, Progress, ScrollView,Text, View, VStack} from "native-base";
+import {Box, Button, Heading, HStack, Modal, Progress, ScrollView, Text, View, VStack} from "native-base";
 import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import Footer from '../../utils/Footer';
 import styles from "../HomeScreen/styles"
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-
 export default function HomeScreen(props) {
     const user = props.route.params.user ? props.route.params.user : props.extraData
     const userID = props.route.params.user.id ? props.route.params.user.id : props.extraData.id;
@@ -22,6 +21,17 @@ export default function HomeScreen(props) {
         tick7 : "❔",
 
     });
+    const [showModal, setShowModal] = useState(0)
+    const [dailyWeight, setDailyWeight] = useState({
+        dw1: 0,
+        dw2: 0,
+        dw3: 0,
+        dw4: 0,
+        dw5: 0,
+        dw6: 0,
+        dw7: 0,
+    });
+
     const [greeting, setGreeting] = useState("GreetingsMorning")
     const [allValues, setAllValues] = useState({
         name: "",
@@ -87,12 +97,132 @@ export default function HomeScreen(props) {
     }
 
     useEffect(() => {
+        getShowModalData().then(Promise.resolve);
         getData().then(Promise.resolve);
         getTickData().then(Promise.resolve);
+        getWeightData().then(Promise.resolve);
         pickGreeting();
 
+        return () => {
+            setFirstLogon().then(Promise.resolve)
+        }
     },[] )
 
+
+    const getShowModalData = async () => {
+        const date = new Date();
+        const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1)+ "-" + date.getDate();
+        const snap2 = firebase.firestore().collection('userDailyTrainingData');
+        snap2.get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if(doc.data().userId === props.route.params.user.id && doc.data().date === dateYMD){
+                    setShowModal(doc.data().firstLogon);
+                }}
+            )
+
+        })
+    }
+
+    const setFirstLogon = async () => {
+        const date = new Date();
+        const dateYMD = date.getFullYear() + "-" + (date.getMonth() + 1)+ "-" + date.getDate();
+        let id;
+        const snap2 = firebase.firestore().collection('userDailyTrainingData');
+        snap2.get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if(doc.data().userId === props.route.params.user.id && doc.data().date === dateYMD){
+                    id = doc.id;
+                    firebase.firestore().collection('userDailyTrainingData').doc(id).update({
+                        firstLogon: 0
+                    })
+                }}
+            )
+
+        })
+    }
+
+    const getWeightData = async () => {
+        let date = new Date();
+        let date1 = new Date();
+        let date2 = new Date();
+        let date3 = new Date();
+        let date4 = new Date();
+        let date5 = new Date();
+        let date6 = new Date();
+        let date7 = new Date();
+        date1.setDate(date.getDate());
+        date2.setDate(date.getDate() - 1);
+        date3.setDate(date.getDate() - 2);
+        date4.setDate(date.getDate() - 3);
+        date5.setDate(date.getDate() - 4);
+        date6.setDate(date.getDate() - 5);
+        date7.setDate(date.getDate() - 6);
+        date1 = date1.getFullYear() + "-" + (date1.getMonth() + 1)+ "-" + date1.getDate();
+        date2 = date2.getFullYear() + "-" + (date2.getMonth() + 1)+ "-" + date2.getDate();
+        date3 = date3.getFullYear() + "-" + (date3.getMonth() + 1)+ "-" + date3.getDate();
+        date4 = date4.getFullYear() + "-" + (date4.getMonth() + 1)+ "-" + date4.getDate();
+        date5 = date5.getFullYear() + "-" + (date5.getMonth() + 1)+ "-" + date5.getDate();
+        date6 = date6.getFullYear() + "-" + (date6.getMonth() + 1)+ "-" + date6.getDate();
+        date7 = date7.getFullYear() + "-" + (date7.getMonth() + 1)+ "-" + date7.getDate();
+
+        let dw1 = 0;
+        let dw2 = 0;
+        let dw3 = 0;
+        let dw4 = 0;
+        let dw5 = 0;
+        let dw6 = 0;
+        let dw7 = 0;
+
+
+        const snap2 =  firebase.firestore().collection('userDailyTrainingData');
+        snap2.get().then(async (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                    if (doc.data().userId === props.route.params.user.id) {
+
+
+                        if(doc.data().date === date1) {
+                            dw1 = parseFloat(doc.data().weight);
+                        }
+
+                        if(doc.data().date === date2) {
+                            dw1 = parseFloat(doc.data().weight);
+                        }
+
+                        if(doc.data().date === date3) {
+                            dw1 = parseFloat(doc.data().weight);
+                        }
+
+                        if(doc.data().date === date4) {
+                            dw1 = parseFloat(doc.data().weight);
+                        }
+
+                        if(doc.data().date === date5) {
+                            dw1 = parseFloat(doc.data().weight);
+                        }
+
+                        if(doc.data().date === date6) {
+                            dw1 = parseFloat(doc.data().weight);
+                        }
+
+                        if(doc.data().date === date7) {
+                            dw1 = parseFloat(doc.data().weight);
+                        }
+
+
+                    }
+                }
+            )
+            setDailyWeight({
+                dw1 : dw1,
+                dw2 : dw2,
+                dw3 : dw3,
+                dw4 : dw4,
+                dw5 : dw5,
+                dw6 : dw6,
+                dw7 : dw7,
+            })
+        })
+    }
 
     const getTickData = async () => {
         let date = new Date();
@@ -280,7 +410,6 @@ export default function HomeScreen(props) {
                 steps: steps,
                 lastTraining: tr
             }
-
             setDailyActivityInfo(tempDoc);
 
             let id;
@@ -302,8 +431,33 @@ export default function HomeScreen(props) {
 
     }
 
+    const pushToHistory = () => {
+        setFirstLogon().then(Promise.resolve)
+        props.navigation.push('History',{user})
+    }
+
+    const pushToProfile = () => {
+        setFirstLogon().then(Promise.resolve)
+        props.navigation.push('Profile',{user})
+    }
+
+
     return (
         <NativeBaseProvider>
+            {showModal === 1 && props.route.params.user.permissionLevel === 0 ?   <View style={{ flex: 1 }}>
+                <Modal isOpen={showModal} onClose={() => setShowModal(0)} style={{backgroundColor: '#f0fff3'}}>
+                    <Modal.Content maxWidth="500px" style={{backgroundColor: '#d4ffdc'}}>
+                        <Modal.CloseButton style={styles.closeButton}/>
+                        <Modal.Header>
+                            <Text style={styles.modalTitle}>{t('firstLogonAlert')} </Text>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Text style={styles.modalText}>{t('noticeWeight')}  </Text>
+                            <Button style = {{backgroundColor: '#32a846'}} onPress={() => pushToProfile()}> <Text style={styles.modalButton}> {t('goToOptions')} </Text> </Button>
+                        </Modal.Body>
+                    </Modal.Content>
+                </Modal>
+            </View> :
             <ScrollView style={{flex: 1, height: '100%'}}>
             <Box w="100%" h="100%" bg="white" >
                 <VStack space="md" marginTop={7}>
@@ -327,7 +481,7 @@ export default function HomeScreen(props) {
 
                     </VStack>
                     <Pressable
-                        onPress={() => props.navigation.push('History',{user})}
+                        onPress={() => pushToHistory()}
                         style={styles.press}
                     >
                         <Box p="5" rounded="8" bg="#d9ffcf">
@@ -337,11 +491,11 @@ export default function HomeScreen(props) {
                                 </Text>
                             </HStack>
                             {
-                                        <View style={{borderWidth: 1, borderColor: '#4ca649', marginTop: 10 , borderRadius: 10, padding: 3}}>
-                                            <View style={{ flexDirection: 'row',}}>
+                                        <View style={{borderWidth: 1, borderColor: '#4ca649', marginTop: 10 , borderRadius: 10, padding: 10}}>
+
                                                 <Text fontSize={20} color="#000" fontWeight="medium">{t('lastTraining')}:</Text>
-                                                <Text fontSize={20} color="#000" fontWeight="medium"> {dailyActivityInfo.lastTraining.date}</Text>
-                                            </View>
+                                                <Text fontSize={20} color="#000" fontWeight="medium">{dailyActivityInfo.lastTraining.date}</Text>
+
 
                                             <View style={{ marginTop: 10}}>
                                                 <Text  fontSize={15} color="#000" fontWeight="medium">{t('distance')} {dailyActivityInfo.lastTraining.distance} km  </Text>
@@ -377,13 +531,55 @@ export default function HomeScreen(props) {
                                         </View>
 
                                         <View style={{ flexDirection: 'row',}}>
-                                            <Text style={styles.weekText}>{getDayName(6)}</Text>
-                                            <Text style={styles.weekText}>{getDayName(5)}</Text>
-                                            <Text style={styles.weekText}>{getDayName(4)}</Text>
-                                            <Text style={styles.weekText}>{getDayName(3)}</Text>
-                                            <Text style={styles.weekText}>{getDayName(2)}</Text>
-                                            <Text style={styles.weekText}>{getDayName(1)}</Text>
-                                            <Text style={styles.weekText}>{getDayName(0)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(6)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(5)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(4)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(3)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(2)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(1)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(0)}</Text>
+
+                                        </View>
+
+                                        <View style={{ marginTop: 10}}>
+
+                                        </View>
+                                    </View>
+                                }
+
+                            </Box>
+
+                        </Pressable>
+
+                        <Pressable style={styles.press7}>
+                            <Box p="5" rounded="8" bg="#e0fff6">
+                                <HStack alignItems="flex-start" style={{height: 50}}>
+                                    <Text fontSize={23} color="#000" fontWeight="medium">
+                                        {t('weightOverWeek')}
+                                    </Text>
+                                </HStack>
+                                {
+                                    <View style={{ marginTop: 10 , borderRadius: 10, padding: 3}}>
+
+                                        <View style={{ flexDirection: 'row',}}>
+                                            <Text style={dailyWeight.dw7 > 9 ? styles.weightTextDouble : styles.weightText}>{dailyWeight.dw7}</Text>
+                                            <Text style={dailyWeight.dw6 > 9 ? styles.weightTextDouble : styles.weightText}>{dailyWeight.dw6}</Text>
+                                            <Text style={dailyWeight.dw5 > 9 ? styles.weightTextDouble : styles.weightText}>{dailyWeight.dw5}</Text>
+                                            <Text style={dailyWeight.dw4 > 9 ? styles.weightTextDouble : styles.weightText}>{dailyWeight.dw4}</Text>
+                                            <Text style={dailyWeight.dw3 > 9 ? styles.weightTextDouble : styles.weightText}>{dailyWeight.dw3}</Text>
+                                            <Text style={dailyWeight.dw2 > 9 ? styles.weightTextDouble : styles.weightText}>{dailyWeight.dw2}</Text>
+                                            <Text style={dailyWeight.dw1 > 9 ? styles.weightTextDouble : styles.weightText}>{dailyWeight.dw1}</Text>
+
+                                        </View>
+
+                                        <View style={{ flexDirection: 'row',}}>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(6)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(5)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(4)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(3)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(2)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(1)}</Text>
+                                            <Text style={t('startButton') === "Rozpocznij" ? styles.weekText : styles.weekTextEng}>{getDayName(0)}</Text>
 
                                         </View>
 
@@ -451,7 +647,7 @@ export default function HomeScreen(props) {
 
                 </VStack>
             </Box>
-            </ScrollView>
+            </ScrollView>}
             <Footer choice={0} user={user} navigation={props.navigation}/>
         </NativeBaseProvider>
     )
