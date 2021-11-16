@@ -21,7 +21,6 @@ One can also use it to look for new diet and training plans.
   <img src="./img/img2.jpg" height="665" width="300" alt="Img2">
   <img src="./img/img3.jpg" height="665" width="300" alt="Img3">
   <img src="./img/img4.jpg" height="665" width="300" alt="Img4">
-  <img src="./img/img5.jpg" height="665" width="300" alt="Img5">
   <img src="./img/img6.jpg" height="665" width="300" alt="Img6">
   <img src="./img/img7.jpg" height="665" width="300" alt="Img7">
   <img src="./img/img8.jpg" height="665" width="300" alt="Img8">
