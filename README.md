@@ -60,10 +60,10 @@ One can also use it to look for new diet and training plans.
 * track weight change
 
 ## Configuration
-Download project and extract to your directory
-Load project into your IDE like Intelij or Webstorm
-Install NPM and Expo
-Run on Expo Go application
+* Download project and extract to your directory
+* Load project into your IDE like Intelij or Webstorm
+* Install NPM and Expo
+* Run on Expo Go application
 
 ## Status
 This application is under construction.
