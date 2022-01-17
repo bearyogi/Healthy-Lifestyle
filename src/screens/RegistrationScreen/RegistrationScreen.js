@@ -6,6 +6,8 @@ import styles from './styles';
 import {useTranslation} from "react-i18next";
 
 export default function RegistrationScreen({navigation}) {
+    const badFormatMsg = "Error: The email address is badly formatted."
+    const usedMailMsg = "Error: The email address is already in use by another account.";
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [email, setEmail] = useState('')
@@ -18,9 +20,14 @@ export default function RegistrationScreen({navigation}) {
 
     const onRegisterPress = () => {
         if (password !== confirmPassword) {
-            alert("Passwords don't match.")
+            alert(t('passwordMatchError'))
             return
         }
+        if (password.length < 6) {
+            alert(t('passwordTooShort'))
+            return
+        }
+
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
@@ -62,7 +69,12 @@ export default function RegistrationScreen({navigation}) {
                     });
             })
             .catch((error) => {
-                alert(error)
+                if(error.toString() === badFormatMsg){
+                    alert(t('emailFormatError'))
+                }
+                if(error.toString() === usedMailMsg){
+                    alert(t('emailInUseError'))
+                }
             });
     }
 

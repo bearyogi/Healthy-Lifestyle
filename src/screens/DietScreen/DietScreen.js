@@ -50,7 +50,11 @@ export default function TrainingScreen(props) {
     }
 
     const getLocale = () => {
-        return NativeModules.I18nManager.localeIdentifier.substring(0,2);
+        let lng = NativeModules.I18nManager.localeIdentifier.substring(0,2);
+        if(lng === "en"){
+            lng = "eng";
+        }
+        return lng;
     }
 
     const getExpandInfo = (id) => {

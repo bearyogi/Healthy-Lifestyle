@@ -34,11 +34,11 @@ export default function LoginScreen({navigation}) {
 
                     })
                     .catch(error => {
-                        alert(error)
+                        alert(t('invalidPass'))
                     });
             })
             .catch(error => {
-                alert(error)
+                alert(t('invalidPass'))
             })
     }
 

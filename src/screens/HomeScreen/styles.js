@@ -149,19 +149,20 @@ export default StyleSheet.create({
     },
     weekTextEng: {
         fontSize: 22,
-        marginRight: '3%'
+        marginRight: '2%'
     },
     tickText: {
         color: '#32a852',
         fontSize: 19,
-        marginRight: '7.5%',
+        marginRight: '7.2%',
         marginBottom: 13
     },
     weightText: {
         color: '#5c5c5c',
         fontWeight: 'bold',
         fontSize: 22,
-        marginRight: '11.2%',
+        marginLeft: '3.5%',
+        marginRight: '7%',
         marginBottom: 13
     },
     weightTextDouble: {

@@ -593,7 +593,7 @@ export default function HomeScreen(props) {
 
                         </Pressable>
 
-                    </View> : <View style={{backgroundColor: '#fff', marginBottom: '45%'} }>
+                    </View> : <View style={{backgroundColor: '#fff', marginBottom: '65%'} }>
                         <Pressable
                             onPress={() => props.navigation.push('Map',{user})}
                             style={styles.press1}>

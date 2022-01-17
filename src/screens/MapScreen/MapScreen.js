@@ -330,7 +330,7 @@ class TrackCurrentUser extends Component{
                         </Text>
 
                             <Text style={styles.textTrainingSmallCalorie}>
-                             {this.state.locale === 'pl' ? " kalorie" : this.state.locale === 'fr' ? " calories": " calories"}
+                             {this.state.locale === 'pl' ? " kalorie" : this.state.locale === 'fr' ? " calories": "calories"}
                             </Text>
                     </View>
                     </View>}
