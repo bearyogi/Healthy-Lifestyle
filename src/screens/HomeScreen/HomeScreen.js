@@ -185,27 +185,27 @@ export default function HomeScreen(props) {
                         }
 
                         if(doc.data().date === date2) {
-                            dw1 = parseFloat(doc.data().weight);
+                            dw2 = parseFloat(doc.data().weight);
                         }
 
                         if(doc.data().date === date3) {
-                            dw1 = parseFloat(doc.data().weight);
+                            dw3 = parseFloat(doc.data().weight);
                         }
 
                         if(doc.data().date === date4) {
-                            dw1 = parseFloat(doc.data().weight);
+                            dw4 = parseFloat(doc.data().weight);
                         }
 
                         if(doc.data().date === date5) {
-                            dw1 = parseFloat(doc.data().weight);
+                            dw5 = parseFloat(doc.data().weight);
                         }
 
                         if(doc.data().date === date6) {
-                            dw1 = parseFloat(doc.data().weight);
+                            dw6 = parseFloat(doc.data().weight);
                         }
 
                         if(doc.data().date === date7) {
-                            dw1 = parseFloat(doc.data().weight);
+                            dw7 = parseFloat(doc.data().weight);
                         }
 
 
@@ -348,7 +348,7 @@ export default function HomeScreen(props) {
                 if(inf.userId === userID && dateYMD === inf.date){
                     calories = calories +  parseInt(inf.calories);
                     distance = distance + (inf.distance * 1000);
-                    if(userDataObj.data().gender === '1' || userDataObj.data().gender === '0'){
+                    if(userDataObj.data().gender === '1' || userDataObj.data().gender === '0' || userDataObj.data().gender === 0){
                         let stepLengthMeters = (parseInt(userDataObj.data().height) * 0.415).toFixed(2) / 100;
                         steps = (distance / stepLengthMeters).toFixed(0);
 
