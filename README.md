@@ -11,8 +11,8 @@
 * [Contact](#Contact)
 
 ## General
-This is a mobile application that is made to help with maintenance of healthy lifestyle.\
-It provides posibilities to track your daily taken steps, distance, and measurement of training routes.\
+This is a mobile application that is made to help with maintenance of a healthy lifestyle.\
+It provides possibilities to track your daily taken steps, distance, and measurement of training routes.\
 One can also use it to look for new diet and training plans.
 
 ## Screenshots
